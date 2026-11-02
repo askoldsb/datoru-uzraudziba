@@ -10,3 +10,4 @@ Projekts uzsākts 2026-11-02. Sīkāks apraksts, mērķi un arhitektūra tiks pa
 
 - `CLAUDE.md` — konteksts darbam ar Claude (lēmumi, konvencijas, pašreizējais stāvoklis)
 - `docs/progress.md` — darba žurnāls pa sesijām
+- `docs/github-iestatijumi.md` — GitHub kontu struktūra, limiti un darba kārtība ar Claude
