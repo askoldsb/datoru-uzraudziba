@@ -1,0 +1,2 @@
+ComputerName,Group,UpdateDays,UpdateTime,ShowNotification,ShutdownAfter,WindowsUpdate,ThirdPartyApps,TeamViewer,Enabled
+PIUAC-ASKOLDS,staff,All,,No,No,No,Yes,Yes,Yes

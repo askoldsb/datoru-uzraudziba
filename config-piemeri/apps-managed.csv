@@ -1,0 +1,14 @@
+Enabled,Key,DisplayName,WingetId,DisplayNamePattern,ExcludePattern,InstallType,SilentArgs,Mode,Architecture,DlInstallerType,Targets
+1,TokenSigning,eParaksts Token Signing,eParaksts.eParakstsTokenSigning,eParaksts Token Signing*,,auto,,UpdateOnly,,,
+1,VCRedistX64,Microsoft Visual C++ 2015+ x64,Microsoft.VCRedist.2015+.x64,Microsoft Visual C++ v14 Redistributable (x64)*,,exe,/install /quiet /norestart,UpdateOnly,,,
+1,VCRedistX86,Microsoft Visual C++ 2015+ x86,Microsoft.VCRedist.2015+.x86,Microsoft Visual C++ v14 Redistributable (x86)*,,exe,/install /quiet /norestart,UpdateOnly,,,
+1,AdobeReader,Adobe Acrobat Reader 64-bit,Adobe.Acrobat.Reader.64-bit,Adobe Acrobat*(64-bit),,exe,-sfx_nu /sAll /rs /msi EULA_ACCEPT=YES,UpdateOnly,,,PIUAC-ASKOLDS
+1,WinRAR,WinRAR,RARLab.WinRAR,WinRAR*,,exe,-s1,UpdateOnly,x64,,PIUAC-ASKOLDS
+1,DotNetDesktop8,.NET 8 Desktop Runtime,Microsoft.DotNet.DesktopRuntime.8,Microsoft Windows Desktop Runtime - 8.*,,exe,/install /quiet /norestart,UpdateOnly,x64,,PIUAC-ASKOLDS
+1,AspNetCore8,ASP.NET Core 8 Runtime,Microsoft.DotNet.AspNetCore.8,Microsoft ASP.NET Core 8.*Shared Framework (x64)*,,exe,/install /quiet /norestart,UpdateOnly,x64,,PIUAC-ASKOLDS
+1,NotepadPP,Notepad++,Notepad++.Notepad++,Notepad++*,,auto,,UpdateOnly,x64,,PIUAC-ASKOLDS
+0,TotalCommander,Total Commander,Ghisler.TotalCommander,Total Commander*,,exe,,UpdateOnly,x64,,PIUAC-ASKOLDS
+1,AdvancedIPScanner,Advanced IP Scanner,Famatech.AdvancedIPScanner,Advanced IP Scanner*,,exe,/SP- /VERYSILENT /NORESTART,UpdateOnly,,,PIUAC-ASKOLDS
+1,Recuva,Recuva,Piriform.Recuva,Recuva*,,exe,/S,UpdateOnly,,,PIUAC-ASKOLDS
+1,SynologyAssistant,Synology Assistant,Synology.Assistant,Synology Assistant*,,auto,/S,UpdateOnly,,,PIUAC-ASKOLDS
+1,SynologyDrive,Synology Drive Client,Synology.DriveClient,Synology Drive Client*,,auto,,UpdateOnly,,,PIUAC-ASKOLDS
