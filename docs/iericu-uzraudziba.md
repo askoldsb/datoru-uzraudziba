@@ -30,7 +30,7 @@ Uzskaitīt ne-datoru iekārtas (monitori, printeri, ekrāni, info kioski, ClickS
 3. Lietotājs NAS DSM izveido plānoto uzdevumu (instrukcijas sniegs Claude).
 
 ## Saistītie atvērtie jautājumi (cita tēma)
-- ClickShare Wi-Fi pazušana: instrukcija dokumentā https://claude.ai/artifact/UJQ9ziNyMRwgzciQixSyMF
+- ClickShare Wi-Fi pazušana: instrukcija glabājas lietotāja datorā (Claude Docs dokuments izdzēsts 2026-11-02)
 - CCleaner noņemšana: ielāps uzlikts, pārbaude pirmdien 26.10 plkst. 12:05 (atgādinājums).
 - PIUAC-MAIRITA Kick pārbaude: pirmdien 26.10 plkst. 12:00 (atgādinājums).
 

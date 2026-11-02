@@ -47,7 +47,7 @@ Sīkāk par GitHub iestatījumiem, limitiem un darba kārtību: `docs/github-ies
 Izdarīts pēdējās sesijās (oktobris 2026):
 - Atskaites krāsu loģika (10/14 dienas) un piezīme "nav redzēts tīklā"; programmu meklētājs `apps-managed-editor`; CCleaner automātiska noņemšana; versiju salīdzināšanas labojums (Recuva); `exe` instalatoru gaidīšanas labojums.
 - Pievienoti datori: PC000159, PC000184, PC000158, PC000161 (portatīvie), OPENLAB-1 (tagad Win 11), OpenLab-2; noņemti liekie `admin` konti; Inkscape/Blender Targets.
-- ClickShare instrukcija (Claude Docs dokuments "ClickShare").
+- ClickShare pieslēgšanas instrukcija tika sagatavota; lietotājs to saglabājis savā datorā, Claude Docs dokuments izdzēsts (2026-11-02).
 - **Adobe Creative Cloud 6.11.0.478.6 uzstādīts visos 13 klases datoros** (DATORKLASE-01..12, -PASN); pārbaudīts, ka parastam lietotājam CC atveras. DATORKLASE-01 grafiks atjaunots (Sun,Wed 04:00, ShutdownAfter Yes).
 - Kursantam admin tiesības noņemtas 11 klases datoros (07 nebija; **PASN vēl jāpārbauda**).
 

@@ -69,4 +69,4 @@ Noņemt (to pašu bloku ar `Remove-LocalGroupMember`). Kursantam jāizrakstās u
 | Cikls karājas pie Adobe instalatora | `patch-exe-nowait.ps1` |
 | TeamViewerHost exit code 2 (DATORKLASE-01) | vēl nav izmeklēts; vērot, vai atkārtojas |
 | Mairita (PIUAC-MAIRITA) Kick uzdevums neparādās | parādās pēc datora ieslēgšanas (viņa strādā pirmdienās) |
-| ClickShare Wi-Fi pazūd | iespējams aparatūras defekts; instrukcija Claude Docs dokumentā "ClickShare" |
+| ClickShare Wi-Fi pazūd | iespējams aparatūras defekts; instrukcija glabājas lietotāja datorā (Claude Docs dokuments izdzēsts) |

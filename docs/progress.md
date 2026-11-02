@@ -23,7 +23,7 @@ Apkopota visa iepriekšējo sarunu informācija:
 - `apps-managed-editor`: poga jaunu programmu meklēšanai (153 → 45 kandidāti).
 - CCleaner automātiska noņemšana (`patch-remove-ccleaner.ps1`); versiju salīdzināšanas labojums (`patch-version-compare.ps1`).
 - Pievienoti PC000159, PC000184, PC000158, PC000161, OPENLAB-1 (→ Win 11), OpenLab-2; Inkscape/Blender Targets; WoL skripts papildināts.
-- ClickShare instrukcija pabeigta (Claude Docs). Ierīču uzskaite — atskaites punkts, apturēts.
+- ClickShare instrukcija pabeigta (vēlāk saglabāta lietotāja datorā, Claude Docs dokuments izdzēsts 2026-11-02). Ierīču uzskaite — atskaites punkts, apturēts.
 
 ## 2026-11-02 (papildinājums)
 
