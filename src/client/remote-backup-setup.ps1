@@ -18,7 +18,7 @@ param(
     [string]$NasRoot = "\\192.168.3.31\Updates",
     [string]$Root = "\\192.168.3.31\ProfiluKopijas",
     [string]$LabUser = "labupdate",
-    [string]$LabPassword = "L@bupdate-2026",
+    [string]$LabPassword = "",   # tukss = prasa palaisanas laika (parole repozitorija netiek glabata)
     [string]$ResticLocal = "C:\Scripts\restic.exe",
     [string]$TaskName = "LabProfileBackup",
     [switch]$StartNow,
@@ -34,6 +34,7 @@ if (-not (Test-Path $resticSrc)) { Write-Host "Nav atrasts restic.exe ($resticSr
 $runScriptOnNas = Join-Path $NasRoot "Tools\lab-backup\lab-backup-run.ps1"
 if (-not (Test-Path $runScriptOnNas)) { Write-Host "Nav atrasts $runScriptOnNas - vispirms ieliec skriptus NAS." -ForegroundColor Red; return }
 
+if ([string]::IsNullOrEmpty($LabPassword)) { $LabPassword = (Get-Credential -UserName $LabUser -Message "Konta $LabUser parole").GetNetworkCredential().Password }
 $adminCred = Get-Credential -Message "Merka datoru lokalais administrators"
 $nasCred = Get-Credential -UserName "labprofilbackup" -Message "NAS lietotajs labprofilbackup"
 $nasPlain = $nasCred.GetNetworkCredential().Password

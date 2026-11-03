@@ -35,7 +35,7 @@
 #>
 
 param(
-    [string]$AccountPassword = "L@bupdate-2026",
+    [string]$AccountPassword = "<LABUPDATE-PAROLE>",   # dziva vertiba tikai admin PC C:\Scripts kopija
 
     [string]$AccountName = "labupdate",
     [string]$NasRoot = "\\192.168.3.31\Updates",
