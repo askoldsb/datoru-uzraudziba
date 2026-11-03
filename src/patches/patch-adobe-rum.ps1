@@ -7,7 +7,7 @@
    - Prasa: Admin Console pakotne (Shared Device), RUM datora:
        C:\Program Files (x86)\Common Files\Adobe\OOBE_Enterprise\RemoteUpdateManager\
    - Atvertas Adobe lietotnes RUM pats izlaiz.
-   - Limits $RumMaxMinutes (120 min); izvade -> C:\ProgramData\LabUpdates\State\rum-last.log,
+   - Limits $RumMaxMinutes (180 min); izvade -> C:\ProgramData\LabUpdates\State\rum-last.log,
      pedejas rindas -> cikla zurnals.
  Ja Config\adobe-rum.txt nav, tas tiek izveidots ar OPENLAB-1 un OPENLAB-2.
  Rezerves kopija .bak-*. Skripts ir idempotents.
@@ -53,7 +53,7 @@ if ($schedule.ThirdPartyAppsRequested) {
         }
         if ($rumTargets -contains $computerName) {
             $rumExe = "C:\Program Files (x86)\Common Files\Adobe\OOBE_Enterprise\RemoteUpdateManager\RemoteUpdateManager.exe"
-            $RumMaxMinutes = 120
+            $RumMaxMinutes = 180
             if (-not (Test-Path $rumExe)) {
                 Write-Log "AdobeRUM : RemoteUpdateManager nav atrasts ($rumExe) - izlaists." "WARN"
                 $failedApps += "AdobeRUM (RUM nav atrasts)"
