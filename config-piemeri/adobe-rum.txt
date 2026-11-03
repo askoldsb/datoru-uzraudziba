@@ -1,0 +1,3 @@
+# Datori, kuros cikla beigas palaiz Adobe Remote Update Manager (viens vards rinda)
+OPENLAB-1
+OPENLAB-2
