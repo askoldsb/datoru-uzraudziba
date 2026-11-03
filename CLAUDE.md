@@ -69,7 +69,7 @@ Neapstiprināts / atvērts: skat. "Nākamie soļi".
 9. PC000182 atpakaļ uz SSID PIUAC.
 10. (Apturēts) Ierīču reģistrs un uzraudzība — `docs/iericu-uzraudziba.md`.
 11. Ja repozitorijā rediģē `client-install.ps1`: sākt no NAS dzīvās versijas, nevis `src/client` kopijas.
-12. PIUAC-MONTA: pārbaudīt pirmo plānoto ciklu (trešdien 04:00, izslēgšanās) un pirmo profila kopiju; ja mainās DHCP IP (.29), pievienot jauno TrustedHosts.
+12. PIUAC-MONTA: pārbaudīt pirmo plānoto ciklu (trešdien 04:00 — vai WoL pamodināja, cikls, izslēgšanās) un pirmo profila kopiju; ja mainās DHCP IP (.29), pievienot jauno TrustedHosts.
 13. Nomainīt `labupdate` paroli (bija repozitorija vēsturē) — visos datoros un NAS.
 
 ## Darba kārtība ar Claude

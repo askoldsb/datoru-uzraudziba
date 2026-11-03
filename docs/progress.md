@@ -9,6 +9,7 @@ Jaunākie ieraksti augšā.
 - Pirmais cikls ar pagaidu grafiku (All, bez laika, ShutdownAfter No) — veiksmīgs; grafiks atjaunots.
 - `remote-backup-setup.ps1` — `LabProfileBackup` Ready; `inventory-manual.csv`: PC000179, Monta Mantrova.
 - `admin` konts (pēdējoreiz 21.11.2024, bez datiem) un profils izdzēsti; Monta paliek lokālais administrators.
+- NAS WoL uzdevumam pievienots PIUAC-MONTA (4C:52:62:AD:03:B3); WoL tīkla kartē ieslēgts. MAC saraksts → `docs/arhitektura.md`.
 - Repozitorijā izņemta `labupdate` parole (`setup-client.ps1`, `remote-backup-setup.ps1`).
 
 ## 2026-11-02 (projekta apkopojums repozitorijā)

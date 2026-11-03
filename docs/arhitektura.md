@@ -71,6 +71,24 @@ Kolonnas: `Enabled, Key, DisplayName, WingetId, DisplayNamePattern, ExcludePatte
 - Lai instalētu lietotnes (Lightroom u.c.) caur CC: uz laiku pievienot `Kursants` lokālo administratoru grupai, lietotājs izrakstās/pierakstās, atver CC **parasti** un instalē; pēc tam tiesības noņemt (komandas — `docs/darba-procedura.md`).
 - Licencēšana: individuālā licence = 2 ierīces; 13 datoriem vajadzīgs Adobe Admin Console **Shared Device License** vai pakotne (Named User + pakotne).
 
+## Wake-on-LAN (NAS uzdevums)
+
+DSM → Vadības panelis → Uzdevumu plānotājs: lietotāja definēts skripts (2 piegājieni, `sleep 20`) pamodina biroja datorus un OpenLab datorus pirms 04:00 cikla (`/usr/syno/sbin/synonet --wake <MAC> eth0`).
+
+| Dators | MAC |
+|---|---|
+| PIUAC-IEVA | 90:1B:0E:D9:37:85 |
+| PIUAC-MAIRITA | FC:AA:14:2F:A2:A3 |
+| PIUAC-INITA | 4C:52:62:B9:79:D5 |
+| PIUAC-LIETVEDIS | 4C:52:62:AB:E1:D0 |
+| PIUAC-apmacibas | 74:56:3C:F9:31:B8 |
+| PIUAC-DACE | 4C:52:62:AB:E2:31 |
+| PIUAC-MONTA | 4C:52:62:AD:03:B3 (pievienots 2026-11-03) |
+| OPENLAB-1 | 4C:52:62:1F:60:8D |
+| OPENLAB-2 | 90:1B:0E:D9:37:AA |
+
+Klases datoru MAC — `src/admin/wol-test.ps1`. Jaunam datoram: pārbaudīt `Get-NetAdapterPowerManagement` (WakeOnMagicPacket = Enabled) un pievienot rindu NAS skriptam.
+
 ## Ierīču uzskaite (apturēts)
 
 Skat. `docs/iericu-uzraudziba.md`.
