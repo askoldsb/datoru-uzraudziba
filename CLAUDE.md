@@ -30,6 +30,8 @@ Sīkāk: `docs/prasibas.md`, `docs/arhitektura.md`, `docs/darba-procedura.md`; s
 - 2026-11-02 — Lielus bināros failus neglabāt Git (bezmaksas plāna limits 100 MB uz failu); izmantot Releases vai citu krātuvi.
 
 - 2026-11-02 — Repozitorijā **nedrīkst būt paroles/API tokeni**: restic parole (`backup-manager.ps1`) un TeamViewer API token (`client-install.ps1`) izņemti no kopijas; dzīvās vērtības glabājas NAS/admin PC.
+- 2026-11-03 — Arī `labupdate` konta parole izņemta no `setup-client.ps1` (vietturis) un `remote-backup-setup.ps1` (prasa palaišanas laikā); tā palikusi Git vēsturē → ieteicams nomainīt.
+- 2026-11-03 — Biroja datori: grafiku kopē no PIUAC-MAIRITA (`Dobele-birojs`, Mon,Wed 04:00, ShutdownAfter Yes); biroja datori tiek iekļauti profilu rezerves kopijās; lietotājs drīkst palikt lokālais administrators.
 - Pull modelis: `LabAppUpdate` (ik 15 min, lietotājs `labupdate`) palaiž NAS `Scripts\client-install.ps1`; grafiks `Config\device-schedule.csv`; lietotņu saraksts `Config\apps-managed.csv`.
 - Rezerves kopijas neietver portatīvos un klases datorus (izņemot ASUS-Ieva, Dace); dokumenti kopumā netiek kopēti; Outlook datus neaiztikt; ESET Endpoint paliek.
 - CCleaner tiek noņemts automātiski katrā ciklā visos datoros (`$RemoveAppNames`).
@@ -50,6 +52,7 @@ Izdarīts pēdējās sesijās (oktobris 2026):
 - ClickShare pieslēgšanas instrukcija tika sagatavota; lietotājs to saglabājis savā datorā, Claude Docs dokuments izdzēsts (2026-11-02).
 - **Adobe Creative Cloud 6.11.0.478.6 uzstādīts visos 13 klases datoros** (DATORKLASE-01..12, -PASN); pārbaudīts, ka parastam lietotājam CC atveras. DATORKLASE-01 grafiks atjaunots (Sun,Wed 04:00, ShutdownAfter Yes).
 - Kursantam admin tiesības noņemtas 11 klases datoros (07 nebija; **PASN vēl jāpārbauda**).
+- 2026-11-03 — **Pievienots PIUAC-MONTA** (biroja stacionārais, Win 11 Pro, 192.168.3.29 DHCP, PC000179, Monta Mantrova): WinRM, klients, grafiks, `LabProfileBackup`, inventārs; pirmais cikls veiksmīgs (WinRAR 7.23.0, VC++ x86); liekais `admin` konts un profils izdzēsti.
 
 Neapstiprināts / atvērts: skat. "Nākamie soļi".
 
@@ -66,6 +69,8 @@ Neapstiprināts / atvērts: skat. "Nākamie soļi".
 9. PC000182 atpakaļ uz SSID PIUAC.
 10. (Apturēts) Ierīču reģistrs un uzraudzība — `docs/iericu-uzraudziba.md`.
 11. Ja repozitorijā rediģē `client-install.ps1`: sākt no NAS dzīvās versijas, nevis `src/client` kopijas.
+12. PIUAC-MONTA: pārbaudīt pirmo plānoto ciklu (trešdien 04:00, izslēgšanās) un pirmo profila kopiju; ja mainās DHCP IP (.29), pievienot jauno TrustedHosts.
+13. Nomainīt `labupdate` paroli (bija repozitorija vēsturē) — visos datoros un NAS.
 
 ## Darba kārtība ar Claude
 

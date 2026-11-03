@@ -64,6 +64,7 @@ Noņemt (to pašu bloku ar `Remove-LocalGroupMember`). Kursantam jāizrakstās u
 | VLC exit 1603 | restartēt datoru un atkārtot ciklu |
 | Windows Update fāze karājas > 1 h | restartēt un atkārtot |
 | Recuva bezgalīga "atjaunināšana" (1.55 pret 1.55.0.133) | `patch-version-compare.ps1` (salīdzina kopīgās komponentes) |
+| `device-schedule.csv` rindu neatrod `-like "PC,*"` | vērtības ir pēdiņās: `-like '"PC",*'` vai `Import-Csv` |
 | Openlab-1 Win11 autologon "User" kļūda | iztīrīt Winlogon `AutoAdminLogon` ierakstus |
 | AdobeCC "nav noradits SilentArgs" | `SilentArgs=--mode=stub` (`apps-managed.csv`) |
 | Cikls karājas pie Adobe instalatora | `patch-exe-nowait.ps1` |

@@ -2,6 +2,15 @@
 
 Jaunākie ieraksti augšā.
 
+## 2026-11-03 (jauns biroja dators PIUAC-MONTA)
+
+- WinRM + Administrator aktivizēts klātienē; IP 192.168.3.29 (DHCP, statisko nelikām); Windows 11 Pro.
+- `remote-setup-client.ps1` — veiksmīgi; `device-schedule.csv` rinda pēc PIUAC-MAIRITA parauga (Dobele-birojs, Mon,Wed 04:00, ShutdownAfter Yes). Piezīme: CSV vērtības ir pēdiņās — raw meklēšanai `'"PIUAC-…",*'`.
+- Pirmais cikls ar pagaidu grafiku (All, bez laika, ShutdownAfter No) — veiksmīgs; grafiks atjaunots.
+- `remote-backup-setup.ps1` — `LabProfileBackup` Ready; `inventory-manual.csv`: PC000179, Monta Mantrova.
+- `admin` konts (pēdējoreiz 21.11.2024, bez datiem) un profils izdzēsti; Monta paliek lokālais administrators.
+- Repozitorijā izņemta `labupdate` parole (`setup-client.ps1`, `remote-backup-setup.ps1`).
+
 ## 2026-11-02 (projekta apkopojums repozitorijā)
 
 Apkopota visa iepriekšējo sarunu informācija:
