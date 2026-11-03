@@ -37,6 +37,7 @@ Sīkāk: `docs/prasibas.md`, `docs/arhitektura.md`, `docs/darba-procedura.md`; s
 - CCleaner tiek noņemts automātiski katrā ciklā visos datoros (`$RemoveAppNames`).
 - Dokobit/Web eID automatizācija izlaista (nav winget).
 - Adobe CC klases datoriem uzstādīts caur `apps-managed.csv` (`SilentArgs=--mode=stub`); CC jālieto ar **parastu lietotāju**, ne ar paaugstinātu iebūvēto Administrator (balts logs / "missing or damaged"). Lietotņu instalēšanai Kursantam uz laiku dodam admin tiesības.
+- 2026-11-03 — OPENLAB-1/2 (Admin Console Shared Device pakotne, RUM uzstādīts) Adobe CC lietotnes nakts ciklā atjaunina ar Remote Update Manager: ielāps `patch-adobe-rum.ps1`, saraksts NAS `Config\adobe-rum.txt`, limits 180 min. RUM atjaunina gada versijas ietvaros (2025 → 2026 nav).
 - Ierīču uzskaite un uzraudzība (3. līmenis) — apturēta, prioritāte ir jaunu datoru pievienošana.
 - Darba stils: atbildes latviski un īsi; komandas pa vienam solim; vienmēr norādīt datoru un tiesības (skat. `docs/prasibas.md`).
 
@@ -70,6 +71,7 @@ Neapstiprināts / atvērts: skat. "Nākamie soļi".
 10. (Apturēts) Ierīču reģistrs un uzraudzība — `docs/iericu-uzraudziba.md`.
 11. Ja repozitorijā rediģē `client-install.ps1`: sākt no NAS dzīvās versijas, nevis `src/client` kopijas.
 12. PIUAC-MONTA: pārbaudīt pirmo plānoto ciklu (trešdien 04:00 — vai WoL pamodināja, cikls, izslēgšanās) un pirmo profila kopiju; ja mainās DHCP IP (.29), pievienot jauno TrustedHosts.
+14. **Adobe RUM**: OPENLAB-1 (23 atj.) un OPENLAB-2 (16 atj.) testa uzdevums `AdobeRUM-Test` palaists 2026-11-03 (žurnāls `C:\ProgramData\LabUpdates\rum-test.log`; lejupielāde lēna ~2,5 h/16 atj.). Pēc veiksmīgām beigām: pārbaudīt noslēguma tekstu (`successfully installed`), palaist `patch-adobe-rum.ps1` uz admin PC, izdzēst `AdobeRUM-Test` abos datoros, pārbaudīt pirmo nakts ciklu.
 13. Nomainīt `labupdate` paroli (bija repozitorija vēsturē) — visos datoros un NAS.
 
 ## Darba kārtība ar Claude

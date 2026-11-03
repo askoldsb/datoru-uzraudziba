@@ -2,6 +2,12 @@
 
 Jaunākie ieraksti augšā.
 
+## 2026-11-03 (Adobe CC atjaunināšana OPENLAB-1/2 ar RUM)
+
+- OPENLAB-1/2: Admin Console Shared Device pakotne, RUM jau uzstādīts (`OOBE_Enterprise\RemoteUpdateManager`). `--action=list`: OPENLAB-1 23 atjauninājumi, OPENLAB-2 16 (pēc manuālas daļējas atjaunināšanas).
+- Tests: vienreizējs SYSTEM uzdevums `AdobeRUM-Test` (`--action=install`, izvade `C:\ProgramData\LabUpdates\rum-test.log`) — darbojas bez lietotāja; lejupielāde lēna.
+- Uzrakstīts `src/patches/patch-adobe-rum.ps1` (pārbaudīts uz dzīvās `client-install.ps1` kopijas, idempotents); vēl NAV pielietots.
+
 ## 2026-11-03 (jauns biroja dators PIUAC-MONTA)
 
 - WinRM + Administrator aktivizēts klātienē; IP 192.168.3.29 (DHCP, statisko nelikām); Windows 11 Pro.
