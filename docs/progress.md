@@ -2,6 +2,12 @@
 
 Jaunākie ieraksti augšā.
 
+## 2026-11-04 (OPENLAB-2 → Windows 11)
+
+- Pārbaude: profili uz C: (`ProfilesDirectory`=C:\Users), lietotājam pārvietotas tikai Documents/Desktop/Downloads uz D:; `D:\AppData` tukša paliekas mape. UEFI+GPT, TPM gatavs, Secure Boot izslēgts, CPU i7-7700 neatbalstīts.
+- `MoSetup\AllowUpgradesWithUnsupportedTPMOrCPU=1` + `setup.exe` no `D:\Downloads\Windows11_Client_x64_en-us_26300_9457.iso`, Keep files and apps, brīdinājums Accept. Ilga ~25 min.
+- Rezultāts: Windows 11 Pro 26300; `LabAppUpdate` LastTaskResult 0; D: mapes un RUM vietā.
+
 ## 2026-11-04 (RUM ieviests)
 
 - OPENLAB-1 pēc RUM: visas lietotnes jaunākajā 2025 versijā; CC Desktop "Update available" = 2026 versijas — lēmums atlikts (konsultācija ar kolēģi).

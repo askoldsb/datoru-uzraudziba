@@ -54,6 +54,12 @@ Piešķirt (**admin PC, administrators**):
 
 Noņemt (to pašu bloku ar `Remove-LocalGroupMember`). Kursantam jāizrakstās un jāpierakstās no jauna. 2026-10-29 noņemts visos klases datoros, izņemot **DATORKLASE-PASN** (pasniedzēja dators bija izslēgts — jāpārbauda un jānoņem, kad ieslēgts; `DATORKLASE-07`: Kursants grupā nebija).
 
+## Windows 10 → 11 (in-place, arī neatbalstīts CPU)
+
+1. **Admin PC:** pārbaudīt `ProfilesDirectory` (jābūt `C:\Users`; ja profili pārcelti uz citu disku — in-place neatbalsta), firmware (`$env:firmware_type` = UEFI, disks GPT), TPM.
+2. **Mērķa dators (TeamViewer), administrators:** `reg add HKLM\SYSTEM\Setup\MoSetup /v AllowUpgradesWithUnsupportedTPMOrCPU /t REG_DWORD /d 1 /f`; piemontēt ISO; `setup.exe` → "Not right now" → Accept brīdinājumu → Keep personal files and apps. Ja bloķē: `setup.exe /product server`.
+3. Pēc tam pārbaudīt `LabAppUpdate`, administratorus, pārvietotās mapes; Windows.old dzēst pēc ~10 dienām.
+
 ## Zināmās problēmas un risinājumi
 
 | Problēma | Cēlonis / risinājums |

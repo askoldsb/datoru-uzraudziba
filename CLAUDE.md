@@ -53,6 +53,7 @@ Izdarīts pēdējās sesijās (oktobris 2026):
 - ClickShare pieslēgšanas instrukcija tika sagatavota; lietotājs to saglabājis savā datorā, Claude Docs dokuments izdzēsts (2026-11-02).
 - **Adobe Creative Cloud 6.11.0.478.6 uzstādīts visos 13 klases datoros** (DATORKLASE-01..12, -PASN); pārbaudīts, ka parastam lietotājam CC atveras. DATORKLASE-01 grafiks atjaunots (Sun,Wed 04:00, ShutdownAfter Yes).
 - Kursantam admin tiesības noņemtas 11 klases datoros (07 nebija; **PASN vēl jāpārbauda**).
+- 2026-11-04 — **OPENLAB-2 atjaunināts uz Windows 11 Pro 26H2** (26300; neatbalstīts CPU i7-7700 → MoSetup atslēga); klients strādā, D: mapes un RUM saglabāti; Elīna paliek administratore. Windows.old dzēst pēc ~10 dienām.
 - 2026-11-04 — **Adobe CC atjaunināšana ar RUM ieviesta** OPENLAB-1/2: testā uzstādīti visi atjauninājumi (23 / 16, Return Code 0); `patch-adobe-rum.ps1` uzlikts NAS `client-install.ps1`, izveidots `Config\adobe-rum.txt`; pagaidu `AdobeRUM-Test` dzēsti.
 - 2026-11-03 — **Pievienots PIUAC-MONTA** (biroja stacionārais, Win 11 Pro, 192.168.3.29 DHCP, PC000179, Monta Mantrova): WinRM, klients, grafiks, `LabProfileBackup`, inventārs; pirmais cikls veiksmīgs (WinRAR 7.23.0, VC++ x86); liekais `admin` konts un profils izdzēsti.
 
