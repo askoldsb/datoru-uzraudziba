@@ -4,6 +4,9 @@ Jaunākie ieraksti augšā.
 
 ## 2026-11-04 (RUM ieviests)
 
+- OPENLAB-1 pēc RUM: visas lietotnes jaunākajā 2025 versijā; CC Desktop "Update available" = 2026 versijas — lēmums atlikts (konsultācija ar kolēģi).
+- PIUAC-MONTA pirmais plānotais cikls 04:00 veiksmīgs (Adobe Reader 26.003.22075, izslēgšanās 04:19); `LabProfileBackup` rezultāts 0. WoL nav pārbaudīts (dators jau bija ieslēgts).
+
 - Testa uzdevumi pabeigti: OPENLAB-1 23/23, OPENLAB-2 16/16 atjauninājumi uzstādīti (Return Code 0; noslēgumā "Following Updates were successfully installed"). Lejupielāde aizņēma vairākas stundas.
 - `patch-adobe-rum.ps1` uzlikts uz admin PC → NAS `client-install.ps1` (rezerves kopija .bak-*); `Config\adobe-rum.txt` = OPENLAB-1, OPENLAB-2.
 - `AdobeRUM-Test` un `rum-test.log` dzēsti abos datoros. OPENLAB grafiks Mon,Wed 04:00 → pirmais RUM nakts cikls 2026-11-09.
