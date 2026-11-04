@@ -23,11 +23,16 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Tīra Windows 11 Pro instalācija (bija Win 10 Pro 22H2): Rufus 4.15, ISO build 26300 en-US, GPT/UEFI; Rufus opcijas — apiet TPM/CPU/RAM, bez MS konta, lokālais konts `auceadmin`, reģionālie iestatījumi, bez datu vākšanas, BitLocker auto-šifrēšana izslēgta, QoL (bez Copilot/OneDrive/Fast Startup); "Windows CA 2023" bootloaderi un "SILENTLY erase" — nē. Visi Disk 0 nodalījumi dzēsti.
 - Datora vārds `AUCEUPDATE-PC`, Windows 11 Pro 10.0.26300, aktivizēts (digitālā licence). Uzstādīts TeamViewer (Easy Access Askolda kontā) un ESET NOD32.
 - Rezerves daļas/dators: citi norakstāmie E5540.
+- Hub sagatavošana Dobelē: strāvas iestatījumi (nekad neaizmigt AC/DC, vāks = Do nothing AC/DC — LIDACTION bija paslēpts, `powercfg /attributes ... -ATTRIB_HIDE`; hibernācija un Fast Startup izslēgti; ekrāns 5 min). Tīkla profils Public → Private jāiestata **uz vietas Aucē**.
+- Lietotājs `hubsync` (Users, ne admin, parole nemainās, paroļu pārvaldniekā); auto-pieteikšanās ar Sysinternals Autologon (parole šifrēta LSA).
+- `C:\Hub`: mantošana noņemta, tikai SYSTEM + Administrators (F) + `hubsync:(RX)` (tikai šai mapei, lai Drive Client redz apakšmapes); `C:\Hub\Sync`: `hubsync:(OI)(CI)M`.
+- Synology Drive Client (instalēts kā `auceadmin`, konfigurēts `hubsync` sesijā; Windows ugunsmūra ienākošie pieprasījumi — Cancel), QuickConnect + `auce-sync` strādā. Divi uzdevumi: `/Filiales/Auce/Atskaites` → `C:\Hub\Sync\Atskaites` **Upload only** (bez "Keep locally deleted"), `/Filiales/Auce/Skripti` → `C:\Hub\Sync\Skripti` **Download only**; On-demand izslēgts, consistency check ieslēgts.
+- Testi OK: augšupielāde (fails no admin sesijas → NAS), lejupielāde (NAS → hub), aizsardzība (lokāla izmaiņa/jauns fails `Skripti` nenonāk NAS). Atklājums: Download only **neatjauno** lokāli izmainītu failu → hub nedrīkst palaist skriptus tieši no `Sync\Skripti` (sk. lēmumus: Authenticode paraksts). Testa faili izdzēsti.
 
 ### Plānotie soļi
 
 1. ~~Centra NAS: Synology Drive Server, Team Folder `Filiales\Auce\`, DSM konts `auce-sync`.~~ Izdarīts.
-2. Portatīvais: datora vārds, aktivizācija, strāvas iestatījumi, ierobežots lietotājs ar auto-pieteikšanos, Drive Client sinhronizācija.
+2. ~~Portatīvais: datora vārds, aktivizācija, strāvas iestatījumi, ierobežots lietotājs ar auto-pieteikšanos, Drive Client sinhronizācija.~~ Izdarīts (atlicis: ekrāna bloķēšana pēc auto-pieteikšanās, tīkla profils Aucē).
 3. Portatīvajā: SMB koplietojums (skripti, konfigurācija, kešs), filiāles `client-install.ps1` versija (`src/filiales/`), grafiks ar `Group = Auce-…`; nakts lejupielādes uzdevums (downloader) instalatoru kešam portatīvajā — ar Dobeli nesinhronizē.
 4. NAS plānotais uzdevums: kopēt Auces statusu/inventāru uz `Logs\Status` / `Logs\Inventory`.
 5. Tests uz 2 Auces datoriem → visi 16 → citas filiāles.
