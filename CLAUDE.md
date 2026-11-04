@@ -74,6 +74,7 @@ Neapstiprināts / atvērts: skat. "Nākamie soļi".
 12. PIUAC-MONTA: 2026-11-04 04:00 cikls OK (Adobe Reader → 26.003, izslēdzās 04:19), profila kopija OK. **WoL vēl nav pārbaudīts** (dators naktī jau bija ieslēgts) — pārbaudīt pēc nākamā cikla, kad dators vakarā izslēgts; ja mainās DHCP IP (.29), pievienot jauno TrustedHosts.
 13. Nomainīt `labupdate` paroli (bija repozitorija vēsturē) — visos datoros un NAS.
 14. **Adobe RUM**: pārbaudīt pirmo nakts ciklu ar RUM OPENLAB-1/2 (pirmdien 2026-11-09 04:00): žurnālā rindas `AdobeRUM :`, atskaitē nav `AdobeRUM (laika limits)`.
+16. **Filiāle Auce** — atsevišķa saruna: sākt ar `docs/filiales-auce.md`, žurnāls `docs/filiales-progress.md`, skripti `src/filiales/`.
 15. **Adobe 2026 versijas OpenLab datoros** — gaida lēmumu (Askolds konsultējas ar kolēģi). Pašlaik 2025 versijas, jaunākie laidieni (RUM); CC Desktop rāda "Update available" = pāreja uz 2026. Variants: "Update all" CC logā abos datoros vai jauna Admin Console pakotne; ņemt vērā failu saderību ar 2025.
 
 ## Darba kārtība ar Claude
