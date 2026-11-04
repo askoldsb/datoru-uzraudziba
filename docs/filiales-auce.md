@@ -71,4 +71,11 @@ Nekas no tā vēl nav uzbūvēts. Kopsavilkums:
 
 ## Lēmumi (filiāles)
 
-_(aizpildīt jaunajā sarunā)_
+- 2026-11-04 — **Arhitektūra: vietējais "hub" portatīvais filiālē** (aizstāj 2026-10-08 mākoņa/B2 plānu). Vecs portatīvais Aucē, vienmēr ieslēgts, pilda NAS + admin datora lomu: SMB koplietojums ar skriptiem/konfigurāciju/kešu, filiāles datori to velk kā Dobelē (pull, `LabAppUpdate`); WinRM, WoL un instalatoru kešs strādā filiāles LAN ietvaros. Piekļuve portatīvajam — TeamViewer.
+- 2026-11-04 — **Atskaites uz centru: Synology Drive Client caur QuickConnect** (Tailscale atmests: licence nav paredzēta iestādei, tunelis uz Dobeles tīklu ir lielāks risks). Portatīvais sinhronizē tikai atsevišķu Team Folder (piem. `Filiales\Auce\`), nevis `Updates`; NAS plānotais uzdevums kopē statusu/inventāru uz `Logs\Status` / `Logs\Inventory`, lai panelis strādā bez izmaiņām.
+- 2026-11-04 — **Instalatoru kešs tikai portatīvajā**: portatīvais katru nakti pats lejupielādē programmu atjauninājumus (kā `downloader.ps1` Dobelē) un glabā lokāli; filiāles datori tos ņem no portatīvā koplietojuma. Ar Dobeles NAS kešs **netiek sinhronizēts** (caur Drive iet tikai atskaites un skripti/grafiks).
+- 2026-11-04 — Drošība: atsevišķs DSM konts (piem. `auce-sync`) tikai ar šo mapi — **obligāts**; atskaites tikai Auce → centrs, skripti/grafiks tikai centrs → Auce (atsevišķas mapes vai sinhronizācijas uzdevumi, ne divvirzienu viena mape).
+
+**Zināmie riski / prasības:** portatīvais = vienīgais kļūmes punkts (vads, Win 11, bez miega, auto-start pēc strāvas, akumulatora uzlādes limits); Drive Client darbojas lietotāja sesijā → auto-pieteikšanās ierobežotam lietotājam + ekrāna bloķēšana; "nav redzēts tīklā" pēc pēdējā statusa laika; `Group = Auce-…`; filiāles tīkla īpašnieku informēt par vienmēr ieslēgtu ierīci.
+
+**Atvērtie jautājumi:** portatīvā modelis/Windows/disks, vai var pieslēgt ar vadu; datoru vārdi un vai ir kopīgs lokālais Administrator; vai Drive Client atbalsta vienvirziena sinhronizāciju (pārbaudīt pēc uzstādīšanas); kur glabāt galveno skriptu kopiju filiālēm.
