@@ -71,7 +71,13 @@ Kolonnas: `Enabled, Key, DisplayName, WingetId, DisplayNamePattern, ExcludePatte
 - Lai instalētu lietotnes (Lightroom u.c.) caur CC: uz laiku pievienot `Kursants` lokālo administratoru grupai, lietotājs izrakstās/pierakstās, atver CC **parasti** un instalē; pēc tam tiesības noņemt (komandas — `docs/darba-procedura.md`).
 - Licencēšana: individuālā licence = 2 ierīces; 13 datoriem vajadzīgs Adobe Admin Console **Shared Device License** vai pakotne (Named User + pakotne).
 
-## Wake-on-LAN (NAS uzdevums)
+## Adobe CC atjaunināšana ar RUM (OPENLAB-1/2)
+
+- OpenLab datoros CC uzstādīts no Admin Console (Shared Device) pakotnes; tajā ir Remote Update Manager `C:\Program Files (x86)\Common Files\Adobe\OOBE_Enterprise\RemoteUpdateManager\RemoteUpdateManager.exe`.
+- Cikla beigās (pirms atskaites/izslēgšanas) datori no `Config\adobe-rum.txt` palaiž `RemoteUpdateManager --action=install` (ielāps `patch-adobe-rum.ps1`, limits 180 min, izvade `C:\ProgramData\LabUpdates\State\rum-last.log`). Atvērtas Adobe lietotnes RUM izlaiž.
+- RUM atjaunina gada versijas ietvaros; pāreja uz jaunu gadu (2025 → 2026) — jauna pakotne Admin Console.
+- Ar roku: `RemoteUpdateManager --action=list` (tikai saraksts).
+
 
 DSM → Vadības panelis → Uzdevumu plānotājs: lietotāja definēts skripts (2 piegājieni, `sleep 20`) pamodina biroja datorus un OpenLab datorus pirms 04:00 cikla (`/usr/syno/sbin/synonet --wake <MAC> eth0`).
 
