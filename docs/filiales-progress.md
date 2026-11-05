@@ -51,7 +51,8 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Pirmais cikls 14:00: grafiks atļauj, inventārs savākts, PSWindowsUpdate no hub `Modules`, Office nav (C2R nav atrasts), Windows Update sākts. **Inventāra ķēde pārbaudīta līdz galam:** hub `Logs\Inventory` → Hub-Sync → `Sync\Atskaites` → Drive → NAS `Filiales\Auce\Atskaites` → `Filiales-Auce-atskaites` → `Updates\Logs\Inventory\PC000062.json` (27 KB).
 
 - PC000062 1. cikls (14:00): Windows Update atrada 11, uzstādīti 10 (līdz 14:20: .NET 8/10, MSRT, draiveri, pēdējais — **Intel tīkla kartes draiveris**), KB5126256 (Win10 ESU sagatavošana) `InProgress`, gaida restartu. Pēc 14:04 žurnālā vairs nav ierakstu, process beidzās bez avārijas notikuma un bez restarta (boot 13:46) — **aizdomas:** tīkla draivera maiņa pārtrauca SMB savienojumu ar hub (žurnāls/kešs). Cēlonis nav pierādīts. "Reizi dienā" marķieris aizliedza atkārtojumu šodien (15:15 — pareizi izlaists).
-- **Nav vēl pārbaudīts:** programmu uzstādīšana no hub keša un statusa (`Logs\Status\PC000062.json`) nonākšana panelī — notiks nākamajā automātiskajā ciklā (PC000062 grafikā katru dienu). Pārbaudīt: panelī PC000062 statuss / `\\AUCEUPDATE-PC\Updates\Logs\Clients\PC000062-*.log` beigās "pabeigta".
+- **Statusa ķēde arī pārbaudīta:** izlaistās palaišanas (15:15) statuss `PC000062.json` bija nonācis NAS `Updates\Logs\Status`. **Nav pārbaudīts:** programmu uzstādīšana no hub keša — ar pirmo īsto Auces datoru (PC000062 norakstīts, izslēgts).
+- Tīrīšana (15:28–15:30): PC000062 izņemts no Auces grafika (Sequence 20261105152819, grafiks atkal tikai virsraksts); dzēsti PC000062 faili hub `Logs\Clients|Inventory|Status` (no PIUAC-ASKOLDS ar Auces `labupdate`) un NAS `Updates\Logs\Status|Inventory`; `Filiales\Auce\Atskaites` iztīrās automātiski (Hub-Sync /MIR + Drive).
 
 ### Aucē uz vietas (kontrolsaraksts)
 
