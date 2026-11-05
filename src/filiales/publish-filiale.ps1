@@ -43,6 +43,9 @@ if (-not $Destination) { $Destination = "\\192.168.3.31\Filiales\$Branch\Skripti
 
 $AllowedTop = @("Scripts", "Config", "Modules", "Tools")
 $NasScriptNames = @("client-install.ps1", "collect-inventory.ps1", "update-notice.ps1")
+# Faili, ko Synology Drive NEsinhronize (pagaidu faili, "." prefikss) - tos nepublicejam,
+# citadi hub tos gaiditu bezgaligi (Pending -> Error).
+$SkipPatterns = @("*.tmp", "~*", ".*", "Thumbs.db", "desktop.ini")
 
 function Write-Step { param([string]$T) Write-Host "`n=== $T ===" -ForegroundColor Cyan }
 
@@ -105,6 +108,9 @@ foreach ($top in $AllowedTop) {
     if (-not (Test-Path $dir)) { continue }
     foreach ($f in @(Get-ChildItem -Path $dir -File -Recurse | Sort-Object FullName)) {
         $rel = $f.FullName.Substring($srcFull.Length + 1)
+        $skip = $false
+        foreach ($p in $SkipPatterns) { if ($f.Name -like $p) { $skip = $true } }
+        if ($skip) { Write-Host "  (izlaists $rel - Drive to nesinhronize)" -ForegroundColor Yellow; continue }
         if ($rel -match "['`"]") {
             Write-Host "KLUDA: faila nosaukuma nedrikst but pedinas: $rel" -ForegroundColor Red
             exit 1
@@ -159,7 +165,7 @@ foreach ($top in $AllowedTop) {
     $from = Join-Path $srcFull $top
     $to = Join-Path $Destination $top
     if (Test-Path $from) {
-        & robocopy.exe $from $to /MIR /R:2 /W:3 /NP /NJH /NJS /NDL | Out-Null
+        & robocopy.exe $from $to /MIR /XF $SkipPatterns /R:2 /W:3 /NP /NJH /NJS /NDL | Out-Null
         if ($LASTEXITCODE -ge 8) { Write-Host "KLUDA: robocopy $top ($LASTEXITCODE)" -ForegroundColor Red; exit 1 }
     } elseif (Test-Path $to) {
         Remove-Item $to -Recurse -Force

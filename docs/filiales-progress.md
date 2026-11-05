@@ -35,6 +35,8 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Tests no PIUAC-ASKOLDS: `net use \\AUCEUPDATE-PC\Updates /user:AUCEUPDATE-PC\labupdate` OK (vārds atrasts), `Logs` rakstāms, `Scripts` — Access denied (pareizi).
 - Klienta skripti filiālē netiek dakšoti — viss caur `-NasRoot \\AUCEUPDATE-PC\Updates` (sk. `src/filiales/README.md`).
 
+- Parakstīšanas sertifikāts (PIUAC-ASKOLDS, CurrentUser\My, neeksportējama atslēga): `CN=PIUAC filiales skripti`, **thumbprint `20E20E2C5D7A6663CE36D110AE07E23895B523B1`**, derīgs līdz 2031-11-05; `.cer` → `C:\Scripts\Filiales\Auce\Tools\`. Publicēšanas avots `C:\Scripts\Filiales\Auce\` (Config: tikai `device-schedule.csv` virsraksts; `apps-managed.csv` — vēl jāizlemj Aucei). `-WhatIf` OK (14 faili); labots: `.tmp` u.c. Drive neatsinhronizējamie faili tiek izlaisti.
+
 ### Aucē uz vietas (kontrolsaraksts)
 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
