@@ -40,7 +40,7 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
 - Vai Auces datori atrod `AUCEUPDATE-PC` pēc vārda (`net use`/`Test-Path \\AUCEUPDATE-PC\Updates`); ja nē — fiksēta IP (saskaņot ar tīkla īpašnieku).
 - Vai izejošais 443 / QuickConnect strādā (Drive Client "Up to date").
-- Vads, Wake on AC tests (atvienot/pieslēgt strāvu ar izlādētu akumulatoru nav jātestē).
+- Hub pieslēgts ar vadu; TeamViewer pieslēgšanās no Dobeles strādā.
 
 ### Plānotie soļi
 
