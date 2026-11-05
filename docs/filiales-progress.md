@@ -37,6 +37,10 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 
 - Parakstīšanas sertifikāts (PIUAC-ASKOLDS, CurrentUser\My, neeksportējama atslēga): `CN=PIUAC filiales skripti`, **thumbprint `20E20E2C5D7A6663CE36D110AE07E23895B523B1`**, derīgs līdz 2031-11-05; `.cer` → `C:\Scripts\Filiales\Auce\Tools\`. Publicēšanas avots `C:\Scripts\Filiales\Auce\` (Config: tikai `device-schedule.csv` virsraksts; `apps-managed.csv` — vēl jāizlemj Aucei). `-WhatIf` OK (14 faili); labots: `.tmp` u.c. Drive neatsinhronizējamie faili tiek izlaisti.
 
+- **Parakstītā publicēšana darbojas** (2026-11-05): 1. publicēšana Sequence 20261105112527 (13 faili) → hub `install-hub-sync.ps1` (thumbprint sakrita, `.cer` → LocalMachine\Root, paraksts Valid, uzdevums `Hub-Sync` SYSTEM ik 15 min + startējot, LastTaskResult 0) → "Published - publiceti 13 faili". Statuss `Filiales\Auce\Atskaites\Hub\AUCEUPDATE-PC.json` nonāk NAS.
+- Kļūda un labojums: PS 5.1 `Get-Content` → JSON ar PSPath u.c. (statuss 445 KB) → `[string]`. Labotais `hub-sync.ps1` piegādāts **caur pašu publicēšanu** (Sequence 20261105113521) — hub pats atjaunināja savu rīku; statuss 408 B.
+- NAS `Filiales\Auce\Skripti\New Text Document.txt` — lieks (nav manifestā, hub ignorē), var dzēst.
+
 ### Aucē uz vietas (kontrolsaraksts)
 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
@@ -48,7 +52,7 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 
 1. ~~Centra NAS: Synology Drive Server, Team Folder `Filiales\Auce\`, DSM konts `auce-sync`.~~ Izdarīts.
 2. ~~Portatīvais: datora vārds, aktivizācija, strāvas iestatījumi, ierobežots lietotājs ar auto-pieteikšanos, Drive Client sinhronizācija.~~ Izdarīts (atlicis: ekrāna bloķēšana pēc auto-pieteikšanās, tīkla profils Aucē).
-3. Portatīvajā: SMB koplietojums (skripti, konfigurācija, kešs), filiāles `client-install.ps1` versija (`src/filiales/`), grafiks ar `Group = Auce-…`; nakts lejupielādes uzdevums (downloader) instalatoru kešam portatīvajā — ar Dobeli nesinhronizē.
+3. Portatīvajā: ~~SMB koplietojums, parakstīta skriptu publicēšana, atskaites uz Drive~~ izdarīts; **atlicis:** nakts lejupielādes uzdevums (downloader ar `-NasRoot C:\Hub\Updates`, `versions.json` + `Cache`), Auces `apps-managed.csv` izvēle, grafiks ar `Group = Auce-…`.
 4. NAS plānotais uzdevums: kopēt Auces statusu/inventāru uz `Logs\Status` / `Logs\Inventory`.
 5. Tests uz 2 Auces datoriem → visi 16 → citas filiāles.
 
