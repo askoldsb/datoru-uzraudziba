@@ -50,6 +50,9 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Filiāles `setup-client.ps1` publicēts (Sequence 20261105134800, 16 faili). **Testa klients PC000062** (Win 10 Pro, Dobeles tīklā, iepriekš nebija sistēmā): `Test-NetConnection AUCEUPDATE-PC -Port 445` OK (vārds atrisināts uz IPv6 link-local — tieša vārdu atrašana, labs signāls Aucei); `net use … /user:labupdate` + `setup-client.ps1` no `\\AUCEUPDATE-PC\Updates\Scripts` → GATAVS. Grafikā `PC000062,Auce-test,Mon..Sun,"",No,No,Yes,Yes,Yes,Yes` (Sequence 20261105135918; `UpdateDays=All` nelieto — apiet "reizi dienā").
 - Pirmais cikls 14:00: grafiks atļauj, inventārs savākts, PSWindowsUpdate no hub `Modules`, Office nav (C2R nav atrasts), Windows Update sākts. **Inventāra ķēde pārbaudīta līdz galam:** hub `Logs\Inventory` → Hub-Sync → `Sync\Atskaites` → Drive → NAS `Filiales\Auce\Atskaites` → `Filiales-Auce-atskaites` → `Updates\Logs\Inventory\PC000062.json` (27 KB).
 
+- PC000062 1. cikls (14:00): Windows Update atrada 11, uzstādīti 10 (līdz 14:20: .NET 8/10, MSRT, draiveri, pēdējais — **Intel tīkla kartes draiveris**), KB5126256 (Win10 ESU sagatavošana) `InProgress`, gaida restartu. Pēc 14:04 žurnālā vairs nav ierakstu, process beidzās bez avārijas notikuma un bez restarta (boot 13:46) — **aizdomas:** tīkla draivera maiņa pārtrauca SMB savienojumu ar hub (žurnāls/kešs). Cēlonis nav pierādīts. "Reizi dienā" marķieris aizliedza atkārtojumu šodien (15:15 — pareizi izlaists).
+- **Nav vēl pārbaudīts:** programmu uzstādīšana no hub keša un statusa (`Logs\Status\PC000062.json`) nonākšana panelī — notiks nākamajā automātiskajā ciklā (PC000062 grafikā katru dienu). Pārbaudīt: panelī PC000062 statuss / `\\AUCEUPDATE-PC\Updates\Logs\Clients\PC000062-*.log` beigās "pabeigta".
+
 ### Aucē uz vietas (kontrolsaraksts)
 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
