@@ -41,6 +41,9 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Kļūda un labojums: PS 5.1 `Get-Content` → JSON ar PSPath u.c. (statuss 445 KB) → `[string]`. Labotais `hub-sync.ps1` piegādāts **caur pašu publicēšanu** (Sequence 20261105113521) — hub pats atjaunināja savu rīku; statuss 408 B.
 - NAS `Filiales\Auce\Skripti\New Text Document.txt` — lieks (nav manifestā, hub ignorē), var dzēst.
 
+- `Hub-Downloader` (konts `auceadmin`, katru nakti 02:30, `C:\Hub\Tools\downloader.ps1` → `C:\Hub\Updates`), publicēts caur `Tools\` (Sequence 20261105124155, 15 faili). Pirmā palaišana: visām programmām "Neizdevas noteikt jaunako versiju" — **winget avots nebija inicializēts `auceadmin` kontam**; `winget source update` paaugstinātā logā no `hubsync` sesijas (runas cits lietotājs) neizdodas (0 %, "Failed when searching source"), **īstā `auceadmin` sesijā** — 100 %, Firefox 159.0 atrasts. Mācība: winget pirmoreiz jāpalaiž interaktīvi tā konta sesijā, ar kuru darbojas uzdevums.
+- `hubsync` parole aizmirsta → nomainīta (`Set-LocalUser`) un Autologon atjaunots (2026-11-05 13:01).
+
 ### Aucē uz vietas (kontrolsaraksts)
 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
