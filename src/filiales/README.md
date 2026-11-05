@@ -12,7 +12,7 @@ NAS dzīvais `client-install.ps1` (kopija bez TeamViewer tokena — `atsauce/cli
 
 | Fails | Kas jādara |
 |---|---|
-| `downloader.ps1` | `$NasRoot` ir cieti iekodēts (`\\PIUAC_CLOUD\Updates`) → padarīt par parametru (vai filiāles kopija ar `C:\Hub\Updates`); palaist hub datorā naktī. winget bez admin/SYSTEM — pārbaudīt. |
+| `downloader.ps1` | **Izdarīts:** `src/filiales/downloader.ps1` = NAS dzīvā versija + `param($NasRoot = "C:\Hub\Updates")` + `clean-logs.ps1` tikai, ja eksistē. Publicē caur `Tools\`; uzdevums `Hub-Downloader` ar `src/admin/register-downloader-task.ps1` (konts `auceadmin`, "whether logged on or not", Highest). |
 | `client-install.ps1` | TeamViewer token iekodēts skriptā → ieteicams pārnest uz atsevišķu konfigurācijas failu (piem. `Config\teamviewer-token.txt`, tikai `labupdate` lasāms), lai skripts pats ir bez noslēpumiem un to var parakstīt/sinhronizēt. |
 | (jauns) hub publicēšanas uzdevums | `Sync\Skripti` → `C:\Hub\Updates\Scripts|Config` **tikai pēc paraksta pārbaudes** (Authenticode, sertifikāts no PIUAC-ASKOLDS). |
 | (jauns) hub atskaišu uzdevums | `C:\Hub\Updates\Logs\Status|Inventory` (+ pēc vajadzības `Clients`) → `C:\Hub\Sync\Atskaites\` (Drive augšupielādē). Žurnālu glabāšanas limits (5 GB kvota). |
