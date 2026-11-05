@@ -47,6 +47,9 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Hub-Downloader 2. palaišana OK (13:14–13:22): Firefox 159.0, Chrome 157.0.8103.39, Zoom 7.2.51704, TeamViewer 15.83.5, TeamViewerHost 15.83.5, VLC 3.0.24, eParaksts 1.11.0, PowerShell 7.6.9.0 → `C:\Hub\Updates\Cache`, `versions.json`.
 - NAS uzdevums **`Filiales-Auce-atskaites`** (Task Scheduler, root, ik 15 min 00:00–23:45, skripta teksts uzdevumā — `src/filiales/nas-filiales-atskaites.sh`): kopē `Filiales/Auce/Atskaites/{Status,Inventory}/<PC>.json` → `Updates/Logs/...` **tikai** datoriem no `Skripti/Config/device-schedule.csv`; žurnāls `Filiales/Auce/nas-atskaites.log` (tikai, ja kopēts vai kļūda). DSM kolonna "Run" rāda fragmentu no komentāriem — tas ir normāli.
 
+- Filiāles `setup-client.ps1` publicēts (Sequence 20261105134800, 16 faili). **Testa klients PC000062** (Win 10 Pro, Dobeles tīklā, iepriekš nebija sistēmā): `Test-NetConnection AUCEUPDATE-PC -Port 445` OK (vārds atrisināts uz IPv6 link-local — tieša vārdu atrašana, labs signāls Aucei); `net use … /user:labupdate` + `setup-client.ps1` no `\\AUCEUPDATE-PC\Updates\Scripts` → GATAVS. Grafikā `PC000062,Auce-test,Mon..Sun,"",No,No,Yes,Yes,Yes,Yes` (Sequence 20261105135918; `UpdateDays=All` nelieto — apiet "reizi dienā").
+- Pirmais cikls 14:00: grafiks atļauj, inventārs savākts, PSWindowsUpdate no hub `Modules`, Office nav (C2R nav atrasts), Windows Update sākts. **Inventāra ķēde pārbaudīta līdz galam:** hub `Logs\Inventory` → Hub-Sync → `Sync\Atskaites` → Drive → NAS `Filiales\Auce\Atskaites` → `Filiales-Auce-atskaites` → `Updates\Logs\Inventory\PC000062.json` (27 KB).
+
 ### Aucē uz vietas (kontrolsaraksts)
 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
