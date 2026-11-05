@@ -44,6 +44,9 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - `Hub-Downloader` (konts `auceadmin`, katru nakti 02:30, `C:\Hub\Tools\downloader.ps1` → `C:\Hub\Updates`), publicēts caur `Tools\` (Sequence 20261105124155, 15 faili). Pirmā palaišana: visām programmām "Neizdevas noteikt jaunako versiju" — **winget avots nebija inicializēts `auceadmin` kontam**; `winget source update` paaugstinātā logā no `hubsync` sesijas (runas cits lietotājs) neizdodas (0 %, "Failed when searching source"), **īstā `auceadmin` sesijā** — 100 %, Firefox 159.0 atrasts. Mācība: winget pirmoreiz jāpalaiž interaktīvi tā konta sesijā, ar kuru darbojas uzdevums.
 - `hubsync` parole aizmirsta → nomainīta (`Set-LocalUser`) un Autologon atjaunots (2026-11-05 13:01).
 
+- Hub-Downloader 2. palaišana OK (13:14–13:22): Firefox 159.0, Chrome 157.0.8103.39, Zoom 7.2.51704, TeamViewer 15.83.5, TeamViewerHost 15.83.5, VLC 3.0.24, eParaksts 1.11.0, PowerShell 7.6.9.0 → `C:\Hub\Updates\Cache`, `versions.json`.
+- NAS uzdevums **`Filiales-Auce-atskaites`** (Task Scheduler, root, ik 15 min 00:00–23:45, skripta teksts uzdevumā — `src/filiales/nas-filiales-atskaites.sh`): kopē `Filiales/Auce/Atskaites/{Status,Inventory}/<PC>.json` → `Updates/Logs/...` **tikai** datoriem no `Skripti/Config/device-schedule.csv`; žurnāls `Filiales/Auce/nas-atskaites.log` (tikai, ja kopēts vai kļūda). DSM kolonna "Run" rāda fragmentu no komentāriem — tas ir normāli.
+
 ### Aucē uz vietas (kontrolsaraksts)
 
 - Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
@@ -55,8 +58,8 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 
 1. ~~Centra NAS: Synology Drive Server, Team Folder `Filiales\Auce\`, DSM konts `auce-sync`.~~ Izdarīts.
 2. ~~Portatīvais: datora vārds, aktivizācija, strāvas iestatījumi, ierobežots lietotājs ar auto-pieteikšanos, Drive Client sinhronizācija.~~ Izdarīts (atlicis: ekrāna bloķēšana pēc auto-pieteikšanās, tīkla profils Aucē).
-3. Portatīvajā: ~~SMB koplietojums, parakstīta skriptu publicēšana, atskaites uz Drive~~ izdarīts; **atlicis:** nakts lejupielādes uzdevums (downloader ar `-NasRoot C:\Hub\Updates`, `versions.json` + `Cache`), Auces `apps-managed.csv` izvēle, grafiks ar `Group = Auce-…`.
-4. NAS plānotais uzdevums: kopēt Auces statusu/inventāru uz `Logs\Status` / `Logs\Inventory`.
+3. Portatīvajā: ~~SMB koplietojums, parakstīta skriptu publicēšana, atskaites uz Drive~~ izdarīts; ~~nakts lejupielāde~~ izdarīts (`Hub-Downloader`); **atlicis:** Auces `apps-managed.csv` izvēle, grafiks ar `Group = Auce-…`.
+4. ~~NAS plānotais uzdevums: kopēt Auces statusu/inventāru uz `Logs\Status` / `Logs\Inventory`.~~ Izdarīts (`Filiales-Auce-atskaites`).
 5. Tests uz 2 Auces datoriem → visi 16 → citas filiāles.
 
 ## 2026-11-04
