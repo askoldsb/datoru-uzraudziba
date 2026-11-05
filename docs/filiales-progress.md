@@ -29,6 +29,19 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - Synology Drive Client (instalēts kā `auceadmin`, konfigurēts `hubsync` sesijā; Windows ugunsmūra ienākošie pieprasījumi — Cancel), QuickConnect + `auce-sync` strādā. Divi uzdevumi: `/Filiales/Auce/Atskaites` → `C:\Hub\Sync\Atskaites` **Upload only** (bez "Keep locally deleted"), `/Filiales/Auce/Skripti` → `C:\Hub\Sync\Skripti` **Download only**; On-demand izslēgts, consistency check ieslēgts.
 - Testi OK: augšupielāde (fails no admin sesijas → NAS), lejupielāde (NAS → hub), aizsardzība (lokāla izmaiņa/jauns fails `Skripti` nenonāk NAS). Atklājums: Download only **neatjauno** lokāli izmainītu failu → hub nedrīkst palaist skriptus tieši no `Sync\Skripti` (sk. lēmumus: Authenticode paraksts). Testa faili izdzēsti.
 
+- `C:\Hub\Updates` (Scripts, Config, Config\Commands, Cache, Modules, Logs\Clients|Status|Inventory|MsiLogs) — atkārto NAS `Updates` struktūru (2026-11-05).
+- Hub lokālais konts `labupdate` (ne admin; **Auces parole**, atšķirīga no Dobeles; jāsakrīt ar `labupdate` Auces datoros). NTFS: `Updates` RX (tikai mape), `Scripts|Config|Cache|Modules` RX, `Logs` Modify. Koplietojums `Updates`: Administrators Full, labupdate Change (bez Everyone).
+- Ugunsmūris: visi iebūvētie "File and Printer Sharing (… SMB-In)" (arī jaunais "Restrictive") izslēgti; savs noteikums **"Hub SMB-In (Private, LocalSubnet)"** TCP 445. Tīkla profils Dobelē uz laiku Private (192.168.3.89).
+- Tests no PIUAC-ASKOLDS: `net use \\AUCEUPDATE-PC\Updates /user:AUCEUPDATE-PC\labupdate` OK (vārds atrasts), `Logs` rakstāms, `Scripts` — Access denied (pareizi).
+- Klienta skripti filiālē netiek dakšoti — viss caur `-NasRoot \\AUCEUPDATE-PC\Updates` (sk. `src/filiales/README.md`).
+
+### Aucē uz vietas (kontrolsaraksts)
+
+- Tīkla profils → Private (`Set-NetConnectionProfile -InterfaceAlias Ethernet -NetworkCategory Private`).
+- Vai Auces datori atrod `AUCEUPDATE-PC` pēc vārda (`net use`/`Test-Path \\AUCEUPDATE-PC\Updates`); ja nē — fiksēta IP (saskaņot ar tīkla īpašnieku).
+- Vai izejošais 443 / QuickConnect strādā (Drive Client "Up to date").
+- Vads, Wake on AC tests (atvienot/pieslēgt strāvu ar izlādētu akumulatoru nav jātestē).
+
 ### Plānotie soļi
 
 1. ~~Centra NAS: Synology Drive Server, Team Folder `Filiales\Auce\`, DSM konts `auce-sync`.~~ Izdarīts.
