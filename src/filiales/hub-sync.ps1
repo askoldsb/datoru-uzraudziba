@@ -96,7 +96,7 @@ function Set-Pending {
     $now = Get-Date
     $since = $null
     if (Test-Path $PendingFile) {
-        try { $since = [datetime]::ParseExact((Get-Content $PendingFile -TotalCount 1), "yyyy-MM-dd HH:mm:ss", $null) } catch { $since = $null }
+        try { $since = [datetime]::ParseExact([string](Get-Content $PendingFile -TotalCount 1), "yyyy-MM-dd HH:mm:ss", $null) } catch { $since = $null }
     }
     if (-not $since) {
         Set-Content -Path $PendingFile -Value $now.ToString("yyyy-MM-dd HH:mm:ss") -Encoding ASCII
@@ -150,7 +150,7 @@ function Invoke-Publish {
         return @{ Result = "Rejected"; Details = "manifest Sequence nav derigs" }
     }
     $lastSeq = 0L
-    if (Test-Path $SeqFile) { [void][long]::TryParse((Get-Content $SeqFile -TotalCount 1), [ref]$lastSeq) }
+    if (Test-Path $SeqFile) { [void][long]::TryParse([string](Get-Content $SeqFile -TotalCount 1), [ref]$lastSeq) }
     if ($seq -lt $lastSeq) {
         return @{ Result = "Rejected"; Details = "manifest Sequence $seq ir vecaks par publiceto $lastSeq" }
     }
@@ -234,7 +234,7 @@ function Write-HubStatus {
         $os = Get-CimInstance Win32_OperatingSystem
         $disk = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'"
         $seq = $null
-        if (Test-Path $SeqFile) { $seq = Get-Content $SeqFile -TotalCount 1 }
+        if (Test-Path $SeqFile) { $seq = [string](Get-Content $SeqFile -TotalCount 1) }  # [string]: PS 5.1 citadi JSON ieraksta PSPath u.c.
         $obj = [ordered]@{
             ComputerName      = $env:COMPUTERNAME
             Branch            = $Branch
