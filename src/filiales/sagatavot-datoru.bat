@@ -90,6 +90,10 @@ foreach ($n in $nics) {
         Get-NetAdapterAdvancedProperty -Name $n.Name -ErrorAction Stop |
             Where-Object { $_.DisplayName -in 'Energy-Efficient Ethernet','Green Ethernet','Power Saving Mode' -and $_.DisplayValue -ne 'Disabled' } |
             ForEach-Object { Set-NetAdapterAdvancedProperty -Name $n.Name -DisplayName $_.DisplayName -DisplayValue 'Disabled' -NoRestart -ErrorAction Stop; L "  $($_.DisplayName): Disabled" }
+        # Intel (piem. I217-V): "Energy Efficient Ethernet" = Off
+        Get-NetAdapterAdvancedProperty -Name $n.Name -ErrorAction Stop |
+            Where-Object { $_.DisplayName -eq 'Energy Efficient Ethernet' -and $_.DisplayValue -ne 'Off' } |
+            ForEach-Object { Set-NetAdapterAdvancedProperty -Name $n.Name -DisplayName $_.DisplayName -DisplayValue 'Off' -NoRestart -ErrorAction Stop; L "  $($_.DisplayName): Off" }
         Get-NetAdapterAdvancedProperty -Name $n.Name -ErrorAction Stop |
             Where-Object { $_.DisplayName -in 'Shutdown Wake-On-Lan','Wake on Magic Packet' -and $_.DisplayValue -ne 'Enabled' } |
             ForEach-Object { Set-NetAdapterAdvancedProperty -Name $n.Name -DisplayName $_.DisplayName -DisplayValue 'Enabled' -NoRestart -ErrorAction Stop; L "  $($_.DisplayName): Enabled" }
