@@ -2,6 +2,12 @@
 
 Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi — sadaļa "Lēmumi"). Skripti: `src/filiales/`.
 
+## 2026-11-09 — Auce: hub uz vietas, PIUAC-IVETA
+
+- **Auces tīkls: 10.13.37.x** (DHCP). **AUCEUPDATE-PC = 10.13.37.15** (DHCP — ja mainās, jāpārbauda vārda atrašana; fiksētu IP saskaņot ar tīkla īpašnieku). Vārds `AUCEUPDATE-PC` no Auces datoriem tiek atrisināts (IPv6 link-local un IPv4).
+- `Test-NetConnection AUCEUPDATE-PC -Port 445` no PIUAC-IVETA: **TcpTestSucceeded False** (vārds atrisināts uz 10.13.37.15). Aizdomas: hub tīkla profils Aucē = Public (SMB noteikums tikai Private) — solis A1 (`Set-NetConnectionProfile … Private`) vēl jāapstiprina hub datorā.
+- **PIUAC-IVETA** (Auces dators): Win 10 Pro 22H2 aktivizēts, i7-7700 (neatbalstīts → MoSetup `AllowUpgradesWithUnsupportedTPMOrCPU=1`), 16 GB RAM, C: WD SSD 224 GB (122 GB brīvi), D: Toshiba HDD 2 TB "data", GPT/UEFI, TPM 2.0, **Secure Boot izslēgts** (ieslēgt BIOS pēc jaunināšanas), BitLocker Off. Ārējais USB INTENSO (F: "hot_service") atvienots pirms jaunināšanas. Lietotāji: `Administrator` (ieslēgts, parole nomainīta uz flotes paroli), `Iveta` (nav admin). WinRM ieslēgts (`Enable-PSRemoting -SkipNetworkProfileCheck`). Windows 11 jaunināšana no `D:\Downloads\Windows11_Client_x64_en-us_26300_9457.iso` (F:\setup.exe, "Keep personal files and apps") — sākta ~09:20.
+
 ## 2026-11-04 — Auce: arhitektūras izvēle, centra NAS, hub portatīvais
 
 - Salīdzināts Askolda risinājums ar 2026-10-08 plānu (B2 mākonis). Izvēle: vietējais hub portatīvais Aucē + Synology Drive Client (QuickConnect) atskaitēm uz centra NAS. Tailscale apsvērts un atmests.
