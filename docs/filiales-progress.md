@@ -16,6 +16,7 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 | Datora vārds (`$env:COMPUTERNAME`) | IP | MAC | Piezīmes |
 |---|---|---|---|
 | AUCE-PASNIEDZEJ (hostname "Auce-pasniedzejs", NetBIOS saīsināts līdz 15) | 10.13.37.186 | 90-1B-0E-D9-37-5E | Win 11 26H2; lietotāji Administrator, labupdate, pasniedzejs, students; sagatavots 2026-11-09 11:59 bez brīdinājumiem |
+| DATORKLASE-1 | 10.13.37.122 | 4C-52-62-19-DE-89 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:08 bez brīdinājumiem. **Vārds līdzīgs Dobeles DATORKLASE-01** (faili nesaduras, bet panelī var jaukt) — apsvērt pārdēvēšanu, piem. AUCE-KLASE-1 |
 
 - Ieteiktā grafika rinda (Aucē WoL vēl nav): `"<DATORS>","Auce","Mon,Tue,Wed,Thu,Fri,Sat,Sun","","No","No","Yes","Yes","Yes","Yes"` → `C:\Scripts\Filiales\Auce\Config\device-schedule.csv` → `publish-filiale.ps1 -Branch Auce`.
 - **PIUAC-IVETA** (Auces dators): Win 10 Pro 22H2 aktivizēts, i7-7700 (neatbalstīts → MoSetup `AllowUpgradesWithUnsupportedTPMOrCPU=1`), 16 GB RAM, C: WD SSD 224 GB (122 GB brīvi), D: Toshiba HDD 2 TB "data", GPT/UEFI, TPM 2.0, **Secure Boot izslēgts** (ieslēgt BIOS pēc jaunināšanas), BitLocker Off. Ārējais USB INTENSO (F: "hot_service") atvienots pirms jaunināšanas. Lietotāji: `Administrator` (ieslēgts, parole nomainīta uz flotes paroli), `Iveta` (nav admin). WinRM ieslēgts (`Enable-PSRemoting -SkipNetworkProfileCheck`). Windows 11 jaunināšana no `D:\Downloads\Windows11_Client_x64_en-us_26300_9457.iso` (F:\setup.exe, "Keep personal files and apps") — sākta ~09:20.
