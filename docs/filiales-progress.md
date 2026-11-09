@@ -18,6 +18,7 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 | AUCE-PASNIEDZEJ (hostname "Auce-pasniedzejs", NetBIOS saīsināts līdz 15) | 10.13.37.186 | 90-1B-0E-D9-37-5E | Win 11 26H2; lietotāji Administrator, labupdate, pasniedzejs, students; sagatavots 2026-11-09 11:59 bez brīdinājumiem → pārdēvēt **AUCE-PASN** |
 | DATORKLASE-1 | 10.13.37.122 | 4C-52-62-19-DE-89 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:08 bez brīdinājumiem. → pārdēvēt **AUCE-KLASE-1** |
 | DATORKLASE-2 | 10.13.37.137 | 4C-52-62-19-DE-F3 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:14 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-2** |
+| DATORKLASE-3 | 10.13.37.125 | 4C-52-62-19-DE-97 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:24 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-3** |
 
 - **Nosaukumu shēma (2026-11-09):** klases datori `AUCE-KLASE-<n>`, pasniedzēja dators `AUCE-PASN` (`Rename-Computer -NewName … -Restart`; sagatavošana paliek spēkā). Grafikā rakstīt JAUNOS vārdus.
 - Ieteiktā grafika rinda (Aucē WoL vēl nav): `"<DATORS>","Auce","Mon,Tue,Wed,Thu,Fri,Sat,Sun","","No","No","Yes","Yes","Yes","Yes"` → `C:\Scripts\Filiales\Auce\Config\device-schedule.csv` → `publish-filiale.ps1 -Branch Auce`.
