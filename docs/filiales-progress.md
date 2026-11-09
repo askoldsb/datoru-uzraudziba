@@ -21,8 +21,10 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 | DATORKLASE-3 | 10.13.37.125 | 4C-52-62-19-DE-97 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:24 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-3** |
 | DATORKLASE-4 | 10.13.37.3 | 4C-52-62-19-DE-F4 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:33 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-4** |
 | DATORKLASE-5 | 10.13.37.78 | B4-2E-99-8C-3B-E2 ("Ethernet 2") | lietotāji Administrator, labupdate, students; sagatavots 2026-11-09 12:42 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-5** |
+| DATORKLASE-6 | 10.13.37.93 | 4C-52-62-11-DD-1D | lietotāji Administrator, labupdate, students; sagatavots 2026-11-09 12:43 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-6** |
 
 - **Nosaukumu shēma (2026-11-09):** klases datori `AUCE-KLASE-<n>`, pasniedzēja dators `AUCE-PASN` (`Rename-Computer -NewName … -Restart`; sagatavošana paliek spēkā). Grafikā rakstīt JAUNOS vārdus.
+- WoL: `sagatavot-datoru.bat` iestata tikai Windows pusi (draiveris, ierīces modināšana, Fast Startup izslēgts); **BIOS WoL nav mainīts** — sakārtot, kad Aucē veidos WoL sūtītāju (hub uzdevums).
 - Ieteiktā grafika rinda (Aucē WoL vēl nav): `"<DATORS>","Auce","Mon,Tue,Wed,Thu,Fri,Sat,Sun","","No","No","Yes","Yes","Yes","Yes"` → `C:\Scripts\Filiales\Auce\Config\device-schedule.csv` → `publish-filiale.ps1 -Branch Auce`.
 - **PIUAC-IVETA** (Auces dators): Win 10 Pro 22H2 aktivizēts, i7-7700 (neatbalstīts → MoSetup `AllowUpgradesWithUnsupportedTPMOrCPU=1`), 16 GB RAM, C: WD SSD 224 GB (122 GB brīvi), D: Toshiba HDD 2 TB "data", GPT/UEFI, TPM 2.0, **Secure Boot izslēgts** (ieslēgt BIOS pēc jaunināšanas), BitLocker Off. Ārējais USB INTENSO (F: "hot_service") atvienots pirms jaunināšanas. Lietotāji: `Administrator` (ieslēgts, parole nomainīta uz flotes paroli), `Iveta` (nav admin). WinRM ieslēgts (`Enable-PSRemoting -SkipNetworkProfileCheck`). Windows 11 jaunināšana no `D:\Downloads\Windows11_Client_x64_en-us_26300_9457.iso` (F:\setup.exe, "Keep personal files and apps") — sākta ~09:20.
 
