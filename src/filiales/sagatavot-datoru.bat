@@ -52,7 +52,21 @@ try {
     Enable-PSRemoting -Force -SkipNetworkProfileCheck -ErrorAction Stop | Out-Null
     Set-Service WinRM -StartupType Automatic
     L "WinRM: $((Get-Service WinRM).Status), Automatic" "Green"
-} catch { L "BRIDINAJUMS: WinRM neizdevas ($($_.Exception.Message))" "Yellow"; $warn += "WinRM" }
+} catch {
+    # Piem. "Unable to check the status of the firewall" (PIUAC-SVETLANA, ESET) - iestatam ar roku
+    L "Enable-PSRemoting neizdevas - iestatu WinRM ar roku..." "Yellow"
+    try {
+        Set-Service WinRM -StartupType Automatic; Start-Service WinRM
+        if (-not (Get-ChildItem WSMan:\localhost\Listener | Where-Object { $_.Keys -contains 'Transport=HTTP' })) {
+            New-Item -Path WSMan:\localhost\Listener -Transport HTTP -Address * -Force | Out-Null
+        }
+        New-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name LocalAccountTokenFilterPolicy -Value 1 -PropertyType DWord -Force | Out-Null
+        if (-not (Get-NetFirewallRule -Name 'WinRM-HTTP-In-Lokalais' -ErrorAction SilentlyContinue)) {
+            New-NetFirewallRule -Name 'WinRM-HTTP-In-Lokalais' -DisplayName 'WinRM (lokalais tikls)' -Direction Inbound -Protocol TCP -LocalPort 5985 -RemoteAddress LocalSubnet -Action Allow -Profile Any | Out-Null
+        }
+        L "WinRM iestatits ar roku: $((Get-Service WinRM).Status), klausitajs HTTP, ugunsmura noteikums 5985 (LocalSubnet)." "Green"
+    } catch { L "BRIDINAJUMS: WinRM neizdevas ($($_.Exception.Message))" "Yellow"; $warn += "WinRM" }
+}
 
 # ---------- 2. Administrator ----------
 Step "2. Administrator konts"
