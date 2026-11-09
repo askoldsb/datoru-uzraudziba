@@ -19,6 +19,7 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 | DATORKLASE-1 | 10.13.37.122 | 4C-52-62-19-DE-89 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:08 bez brīdinājumiem. → pārdēvēt **AUCE-KLASE-1** |
 | DATORKLASE-2 | 10.13.37.137 | 4C-52-62-19-DE-F3 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:14 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-2** |
 | DATORKLASE-3 | 10.13.37.125 | 4C-52-62-19-DE-97 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:24 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-3** |
+| DATORKLASE-4 | 10.13.37.3 | 4C-52-62-19-DE-F4 | lietotāji Administrator, kursants, labupdate; sagatavots 2026-11-09 12:33 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-4** |
 
 - **Nosaukumu shēma (2026-11-09):** klases datori `AUCE-KLASE-<n>`, pasniedzēja dators `AUCE-PASN` (`Rename-Computer -NewName … -Restart`; sagatavošana paliek spēkā). Grafikā rakstīt JAUNOS vārdus.
 - Ieteiktā grafika rinda (Aucē WoL vēl nav): `"<DATORS>","Auce","Mon,Tue,Wed,Thu,Fri,Sat,Sun","","No","No","Yes","Yes","Yes","Yes"` → `C:\Scripts\Filiales\Auce\Config\device-schedule.csv` → `publish-filiale.ps1 -Branch Auce`.
