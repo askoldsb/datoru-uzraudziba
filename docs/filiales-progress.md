@@ -23,6 +23,7 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 | DATORKLASE-5 | 10.13.37.78 | B4-2E-99-8C-3B-E2 ("Ethernet 2") | lietotāji Administrator, labupdate, students; sagatavots 2026-11-09 12:42 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-5** |
 | DATORKLASE-6 | 10.13.37.93 | 4C-52-62-11-DD-1D | lietotāji Administrator, labupdate, students; sagatavots 2026-11-09 12:43 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-6** |
 | DATORKLASE-7 | 10.13.37.76 | B4-2E-99-7D-EC-08 ("Ethernet 2") | lietotāji Administrator, labupdate, students; sagatavots 2026-11-09 12:42 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-7** |
+| DATORKLASE-8 | 10.13.37.53 | 00-22-4D-AA-DE-6A | lietotāji Administrator, labupdate, students; sagatavots 2026-11-09 12:52 bez brīdinājumiem → pārdēvēt **AUCE-KLASE-8** |
 
 - **Nosaukumu shēma (2026-11-09):** klases datori `AUCE-KLASE-<n>`, pasniedzēja dators `AUCE-PASN` (`Rename-Computer -NewName … -Restart`; sagatavošana paliek spēkā). Grafikā rakstīt JAUNOS vārdus.
 - WoL: `sagatavot-datoru.bat` iestata tikai Windows pusi (draiveris, ierīces modināšana, Fast Startup izslēgts); **BIOS WoL nav mainīts** — sakārtot, kad Aucē veidos WoL sūtītāju (hub uzdevums).
