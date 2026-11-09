@@ -9,7 +9,15 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - 11:08–11:18: hub kabelis bija pārslēgts citā vietā → saņēma **10.136.124.4** no 10.136.124.1 (pakalpojumu sniedzēja tīkls, DNS 195.122.12.241, sufikss net.3d.lv) — **nepareizs tīkls**. Atpakaļ sākotnējā vietā: **10.13.37.15/24, vārteja 10.13.37.254**, profils "Network 2" → **Private** (Windows profilu glabā katram tīklam atsevišķi). Mācība: hubu slēgt tajā pašā tīklā kā darba datorus; pēc pārslēgšanas pārbaudīt profilu.
 - TeamViewer hub datorā: pakalpojums Running/Automatic, 15.83.5; Easy Access piešķirts `auceadmin` sesijā, dators pievienots Askolda TeamViewer kontam — pieslēgšanās strādā arī, kad pieteicies `hubsync`.
 - Sagatavoti `src/filiales/win11-upgrade.bat` (Win10→Win11), `win11-versijas-atjaunosana.bat` (vecāks Win11→ISO build, `/product server`), `sagatavot-datoru.bat` (WinRM, Administrator, enerģija, WoL, setup-client no hub). Auces datori pašlaik jauninās uz Win11 26300. PIUAC-IVETA: pirmais mēģinājums (GUI setup.exe) iestrēga "Checking for updates 46 %" → apturēts, atkārtots ar `win11-upgrade.bat` (`/dynamicupdate disable`).
-- **Atlicis:** `Test-NetConnection AUCEUPDATE-PC -Port 445` no Auces datora (A6), tad `sagatavot-datoru.bat` katrā datorā un grafiks.
+- A6 OK: no **AUCE-PASNIEDZEJ** (Win 11 Pro 26H2) `Test-NetConnection AUCEUPDATE-PC -Port 445` → True (caur IPv6 link-local).
+- Paroļu versija `sagatavot-datoru-AUCE.bat` (Administrator flotes parole + Auces labupdate parole iestrādātas; **nav repozitorijā**, glabājas tikai pie Askolda; pēc lietošanas dzēst no datoriem). Repozitorijā paliek `sagatavot-datoru.bat` (prasa paroles).
+- **Sagatavoti datori (jāpievieno grafikam + jāpublicē no PIUAC-ASKOLDS):**
+
+| Datora vārds (`$env:COMPUTERNAME`) | IP | MAC | Piezīmes |
+|---|---|---|---|
+| AUCE-PASNIEDZEJ (hostname "Auce-pasniedzejs", NetBIOS saīsināts līdz 15) | 10.13.37.186 | 90-1B-0E-D9-37-5E | Win 11 26H2; lietotāji Administrator, labupdate, pasniedzejs, students; sagatavots 2026-11-09 11:59 bez brīdinājumiem |
+
+- Ieteiktā grafika rinda (Aucē WoL vēl nav): `"<DATORS>","Auce","Mon,Tue,Wed,Thu,Fri,Sat,Sun","","No","No","Yes","Yes","Yes","Yes"` → `C:\Scripts\Filiales\Auce\Config\device-schedule.csv` → `publish-filiale.ps1 -Branch Auce`.
 - **PIUAC-IVETA** (Auces dators): Win 10 Pro 22H2 aktivizēts, i7-7700 (neatbalstīts → MoSetup `AllowUpgradesWithUnsupportedTPMOrCPU=1`), 16 GB RAM, C: WD SSD 224 GB (122 GB brīvi), D: Toshiba HDD 2 TB "data", GPT/UEFI, TPM 2.0, **Secure Boot izslēgts** (ieslēgt BIOS pēc jaunināšanas), BitLocker Off. Ārējais USB INTENSO (F: "hot_service") atvienots pirms jaunināšanas. Lietotāji: `Administrator` (ieslēgts, parole nomainīta uz flotes paroli), `Iveta` (nav admin). WinRM ieslēgts (`Enable-PSRemoting -SkipNetworkProfileCheck`). Windows 11 jaunināšana no `D:\Downloads\Windows11_Client_x64_en-us_26300_9457.iso` (F:\setup.exe, "Keep personal files and apps") — sākta ~09:20.
 
 ## 2026-11-04 — Auce: arhitektūras izvēle, centra NAS, hub portatīvais
