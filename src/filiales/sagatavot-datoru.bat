@@ -10,7 +10,7 @@ rem   1. WinRM ieslegsana
 rem   2. Administrator konts ieslegts, pec izveles flotes parole
 rem   3. Energija: dators neaizmieg (stravaa), monitors 30 min,
 rem      hibernacija un Fast Startup izslegti
-rem   4. Wake-on-LAN tikla karte
+rem   4. Wake-on-LAN tikla karte (ari bez energijas taupisanas karte)
 rem   5. Pieslegsana hub (labupdate) un setup-client.ps1 no hub:
 rem      labupdate konts, LabAppUpdate un Update-Notice-Check
 rem      uzdevumi, Delivery Optimization LAN
@@ -85,6 +85,15 @@ foreach ($n in $nics) {
         L "WoL ieslegts: $($n.Name) ($($n.MacAddress))" "Green"
     } catch { L "WoL neizdevas: $($n.Name) - $($_.Exception.Message)" "Yellow"; $warn += "WoL $($n.Name)" }
     try { & powercfg.exe /deviceenablewake "$($n.InterfaceDescription)" 2>$null | Out-Null } catch { }
+    # Realtek u.c.: energijas taupisana tikla karte trauce WoL pec izslegsanas (parbaudits Auce 2026-11-09)
+    try {
+        Get-NetAdapterAdvancedProperty -Name $n.Name -ErrorAction Stop |
+            Where-Object { $_.DisplayName -in 'Energy-Efficient Ethernet','Green Ethernet','Power Saving Mode' -and $_.DisplayValue -ne 'Disabled' } |
+            ForEach-Object { Set-NetAdapterAdvancedProperty -Name $n.Name -DisplayName $_.DisplayName -DisplayValue 'Disabled' -NoRestart -ErrorAction Stop; L "  $($_.DisplayName): Disabled" }
+        Get-NetAdapterAdvancedProperty -Name $n.Name -ErrorAction Stop |
+            Where-Object { $_.DisplayName -in 'Shutdown Wake-On-Lan','Wake on Magic Packet' -and $_.DisplayValue -ne 'Enabled' } |
+            ForEach-Object { Set-NetAdapterAdvancedProperty -Name $n.Name -DisplayName $_.DisplayName -DisplayValue 'Enabled' -NoRestart -ErrorAction Stop; L "  $($_.DisplayName): Enabled" }
+    } catch { L "  Tikla kartes papildu iestatijumi: $($_.Exception.Message)" "Yellow" }
 }
 if ($nics.Count -eq 0) { L "Vadu tikla karte nav atrasta (WoL izlaists)." "Yellow"; $warn += "nav vadu tikla kartes" }
 
