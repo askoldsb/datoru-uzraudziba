@@ -8,6 +8,10 @@
  Kad panelis aizverts un grafiks mainits (nospiests "Saglabat uz NAS"),
  izmainas automatiski paraksta un publice (publish-filiale.ps1).
 
+ Dobeles panelis NETIEK mainits: katru reizi tiek izveidota kopija
+ C:\Scripts\config-panel-filiale.ps1 (taja pasa mape - paneli
+ palrikiem), kura paslepas pogas, kas filialei neder ($HideButtons).
+
  Isceljs uz darbvirsmas: -CreateShortcut
    powershell -ExecutionPolicy Bypass -File C:\Scripts\Filiales\filiales-grafiks.ps1 -Branch Auce -CreateShortcut
 ============================================================
@@ -15,7 +19,8 @@
 param(
     [string]$Branch = "Auce",
     [string]$Panel = "C:\Scripts\config-panel.ps1",
-    [switch]$CreateShortcut
+    [switch]$CreateShortcut,
+    [string[]]$HideButtons = @("Atvert ESET portalu", "Profilu kopijas")
 )
 
 $root = "C:\Scripts\Filiales\$Branch"
@@ -42,7 +47,19 @@ foreach ($p in @($Panel, $csv, $pub)) {
 $before = (Get-FileHash $csv -Algorithm SHA256).Hash
 Write-Host "Atveru $Branch grafiku ($csv)..." -ForegroundColor Cyan
 Write-Host "Pec izmainam: 'Saglabat uz NAS', tad aizver logu - publicesana notiks automatiski."
-& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $Panel -NasRoot $root
+# Panela kopija ar paslepta pogam (originals netiek mainits)
+$panelCopy = Join-Path (Split-Path $Panel -Parent) "config-panel-filiale.ps1"
+$txt = [System.IO.File]::ReadAllText($Panel)
+foreach ($h in $HideButtons) {
+    $pattern = '(?m)^([ \t]*)(\$\w+)\.Text\s*=\s*"' + [regex]::Escape($h) + '"'
+    if ([regex]::IsMatch($txt, $pattern)) {
+        $txt = [regex]::Replace($txt, $pattern, '$0; $2.Visible = $false')
+    } else {
+        Write-Host "  (poga '$h' panelii nav atrasta - neko neslepju)" -ForegroundColor Yellow
+    }
+}
+[System.IO.File]::WriteAllText($panelCopy, $txt, (New-Object System.Text.UTF8Encoding($true)))
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $panelCopy -NasRoot $root
 $after = (Get-FileHash $csv -Algorithm SHA256).Hash
 
 if ($after -eq $before) {
