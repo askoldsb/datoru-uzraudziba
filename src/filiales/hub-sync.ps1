@@ -23,9 +23,10 @@
 
  3) WAKE-ON-LAN PEC GRAFIKA (ka Dobeles NAS)
     Datoriem ar UpdateTime grafika (Config\device-schedule.csv) un sodienas
-    dienu UpdateDays sarakstaa hub 1-20 min pirms UpdateTime nosuta magic
-    packet (2x). MAC no Logs\Inventory\<dators>.json (vadu adapteris).
-    Viena reize diena katram datoram (State\wol-sent.txt).
+    dienu UpdateDays sarakstaa hub 1-50 min pirms UpdateTime nosuta magic
+    packet (3x). Lidz 3 meginajumiem (katra Hub-Sync palaisana ik 15 min);
+    datoru, kura statusa fails ir svaigs (<20 min), neaiztiek.
+    MAC no Logs\Inventory\<dators>.json (vadu adapteris). State\wol-sent.txt.
 
  Uzstadisana: skat. src/filiales/README.md.
 ============================================================
@@ -308,7 +309,10 @@ function Send-MagicPacket {
 }
 
 function Invoke-ScheduledWake {
-    param([datetime]$Now = (Get-Date))
+    # Modina datorus pirms grafika laika. Hub-Sync darbojas ik 15 min, tapec logs 1..50 min pirms
+    # UpdateTime dod 3 meginajumus (piem. 03:15, 03:30, 03:45 pirms 04:00). Katra reize 3 paketes.
+    # Datoru, kura statusa fails atjaunots pedejas 20 min (klients jau strada), neaiztiekam.
+    param([datetime]$Now = (Get-Date), [int]$WindowMinutes = 50, [int]$MaxAttempts = 3, [int]$AliveMinutes = 20)
     $out = @()
     $csv = Join-Path $UpdatesRoot 'Config\device-schedule.csv'
     if (-not (Test-Path $csv)) { return $out }
@@ -325,21 +329,33 @@ function Invoke-ScheduledWake {
         if ($days -ne 'All' -and (@($days -split ',' | ForEach-Object { $_.Trim() }) -notcontains $dow)) { continue }
         $target = $Now.Date.AddHours([int]$Matches[1]).AddMinutes([int]$Matches[2])
         $mins = ($target - $Now).TotalMinutes
-        if ($mins -lt 1 -or $mins -gt 20) { continue }
+        if ($mins -lt 1 -or $mins -gt $WindowMinutes) { continue }
         $name = [string]$r.ComputerName
-        $key = "$today|$name"
-        if ($sent -contains $key) { continue }
+        $prefix = "$today|$name"
+        $attempts = @($sent | Where-Object { $_ -eq $prefix -or $_ -like "$prefix|*" }).Count
+        if ($attempts -ge $MaxAttempts) { continue }
+        $st = Join-Path $UpdatesRoot ("Logs\Status\" + $name + ".json")
+        if ((Test-Path -LiteralPath $st) -and (((Get-Date) - (Get-Item -LiteralPath $st).LastWriteTime).TotalMinutes -lt $AliveMinutes)) {
+            if ($attempts -gt 0) {
+                $key = "$prefix|ok"
+                if ($sent -notcontains $key) { Add-Content -Path $stateFile -Value $key; $sent += $key; $out += "WoL: $name ieslegts (statuss svaigs)" }
+            }
+            continue
+        }
+        if ($sent -contains "$prefix|ok") { continue }
         $mac = Get-InventoryMac $name
         if (-not $mac) { $out += "WoL: $name - MAC nav zinams (nav inventara)"; continue }
         try {
-            Send-MagicPacket $mac; Start-Sleep -Seconds 2; Send-MagicPacket $mac
+            1..3 | ForEach-Object { Send-MagicPacket $mac; Start-Sleep -Seconds 2 }
+            $n = $attempts + 1
+            $key = "$prefix|$n"
             Add-Content -Path $stateFile -Value $key
             $sent += $key
-            $out += "WoL: $name ($mac) pamodinats pirms $t"
+            $out += "WoL: $name ($mac) pamodinats pirms $t (meginajums $n/$MaxAttempts)"
         } catch { $out += "WoL: $name - kluda: $_" }
     }
-    if ((Test-Path $stateFile) -and (@(Get-Content $stateFile).Count -gt 500)) {
-        Get-Content $stateFile | Select-Object -Last 300 | Set-Content $stateFile
+    if ((Test-Path $stateFile) -and (@(Get-Content $stateFile).Count -gt 1000)) {
+        Get-Content $stateFile | Select-Object -Last 600 | Set-Content $stateFile
     }
     return $out
 }
