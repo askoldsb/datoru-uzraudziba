@@ -2,6 +2,14 @@
 
 Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi — sadaļa "Lēmumi"). Skripti: `src/filiales/`.
 
+## 2026-11-16 — Auce: datori grafikā, pirmais īstais cikls
+
+- Statusa faili (`\\192.168.3.31\Filiales\Auce\Atskaites\Status`) apstiprina pārdēvēšanu: AUCE-KLASE-1…8, AUCE-PASN; PIUAC-IVETA, PIUAC-SVETLANA. Veci faili DATORKLASE-2/-6, AUCE-PASNIEDZEJ — no laika pirms pārdēvēšanas (dzēst hub `C:\Hub\Updates\Logs\Status`).
+- **Grafiks:** 11 rindas (AUCE-KLASE-1…8 + AUCE-PASN → `Auce`; PIUAC-IVETA, PIUAC-SVETLANA → `Auce-birojs`), visas dienas, UpdateTime tukšs, ShowNotification/ShutdownAfter No, WindowsUpdate/ThirdPartyApps/TeamViewer/Enabled Yes. Publicēts Sequence **20261116112955**; hub "Published - 16 faili" 11:36 (Hub-Sync palaists ar roku).
+- Hub datorā atkal parādījās Windows ugunsmūra jautājums par Synology Drive Client → Cancel (nav vajadzīgs).
+- **PIUAC-IVETA 1. cikls** (palaists no hub `Invoke-Command … schtasks /Run LabAppUpdate`, 11:37): grafiks atļauj, Office M365 16.0.20527.20150 atjaunināšana uzdota, Windows Update — 7 atjauninājumi instalējas.
+- Publicētais `client-install.ps1` ir no 2026-11-05 (5478CC7CC116) — ja Dobelē tas mainīts, nākamreiz publicēt ar `-RefreshFromNas`.
+
 ## 2026-11-09 — Auce: hub uz vietas, PIUAC-IVETA
 
 - **Auces tīkls: 10.13.37.x** (DHCP). **AUCEUPDATE-PC = 10.13.37.15** (DHCP — ja mainās, jāpārbauda vārda atrašana; fiksētu IP saskaņot ar tīkla īpašnieku). Vārds `AUCEUPDATE-PC` no Auces datoriem tiek atrisināts (IPv6 link-local un IPv4).
