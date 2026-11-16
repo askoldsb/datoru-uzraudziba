@@ -21,6 +21,12 @@
     hub stavoklis Atskaites\Hub\<dators>.json.
     Logs\Clients paliek hub datora (tikai tiris pec -ClientLogDays).
 
+ 3) WAKE-ON-LAN PEC GRAFIKA (ka Dobeles NAS)
+    Datoriem ar UpdateTime grafika (Config\device-schedule.csv) un sodienas
+    dienu UpdateDays sarakstaa hub 1-20 min pirms UpdateTime nosuta magic
+    packet (2x). MAC no Logs\Inventory\<dators>.json (vadu adapteris).
+    Viena reize diena katram datoram (State\wol-sent.txt).
+
  Uzstadisana: skat. src/filiales/README.md.
 ============================================================
 #>
@@ -246,11 +252,96 @@ function Write-HubStatus {
             PublishDetails    = $Publish.Details
             PublishedSequence = $seq
             ReportErrors      = @($ReportErrors)
+            LastWake          = @($script:wakeLog)
         }
         $obj | ConvertTo-Json -Depth 4 | Set-Content -Path (Join-Path $dir "$($env:COMPUTERNAME).json") -Encoding UTF8
     } catch {
         Write-HubLog "Hub statusu neizdevas ierakstit: $_" "WARN"
     }
+}
+
+# ---------- 3. WAKE-ON-LAN PEC GRAFIKA ----------
+
+function Find-InventoryAdapters {
+    param($Obj)
+    if ($null -eq $Obj) { return $null }
+    if ($Obj -is [System.Management.Automation.PSCustomObject]) {
+        foreach ($p in $Obj.PSObject.Properties) {
+            if ($p.Name -eq 'Adapters') { return @($p.Value) }
+            $r = Find-InventoryAdapters $p.Value
+            if ($r) { return $r }
+        }
+    } elseif ($Obj -is [System.Array]) {
+        foreach ($x in $Obj) { $r = Find-InventoryAdapters $x; if ($r) { return $r } }
+    }
+    return $null
+}
+
+function Get-InventoryMac {
+    param([string]$ComputerName)
+    $p = Join-Path $UpdatesRoot ("Logs\Inventory\" + $ComputerName + ".json")
+    if (-not (Test-Path -LiteralPath $p)) { return $null }
+    try { $inv = Get-Content -LiteralPath $p -Raw -Encoding UTF8 | ConvertFrom-Json } catch { return $null }
+    $ad = @(Find-InventoryAdapters $inv | Where-Object { $_.Mac -and ([string]$_.Description + ' ' + [string]$_.Name) -notmatch 'Wi-?Fi|Wireless|802\.11|WLAN|Bluetooth' })
+    if ($ad.Count -eq 0) { return $null }
+    $up = @($ad | Where-Object { [string]$_.Status -eq 'Up' })
+    if ($up.Count -gt 0) { return ([string]$up[0].Mac).ToUpperInvariant() }
+    return ([string]$ad[0].Mac).ToUpperInvariant()
+}
+
+function Send-MagicPacket {
+    param([string]$Mac)
+    $bytes = [byte[]](($Mac -replace '[^0-9A-Fa-f]', '') -split '(..)' | Where-Object { $_ } | ForEach-Object { [Convert]::ToByte($_, 16) })
+    if ($bytes.Count -ne 6) { throw "nederiga MAC $Mac" }
+    $packet = [byte[]]((,0xFF * 6) + ($bytes * 16))
+    $targets = @('255.255.255.255')
+    try {
+        foreach ($a in @(Get-NetIPAddress -AddressFamily IPv4 -ErrorAction Stop | Where-Object { $_.IPAddress -notlike '169.254.*' -and $_.IPAddress -ne '127.0.0.1' -and $_.PrefixLength -eq 24 })) {
+            $o = $a.IPAddress -split '\.'; $targets += ($o[0] + '.' + $o[1] + '.' + $o[2] + '.255')
+        }
+    } catch { }
+    $u = New-Object System.Net.Sockets.UdpClient
+    try {
+        $u.EnableBroadcast = $true
+        foreach ($t in ($targets | Select-Object -Unique)) { [void]$u.Send($packet, $packet.Length, $t, 9) }
+    } finally { $u.Close() }
+}
+
+function Invoke-ScheduledWake {
+    param([datetime]$Now = (Get-Date))
+    $out = @()
+    $csv = Join-Path $UpdatesRoot 'Config\device-schedule.csv'
+    if (-not (Test-Path $csv)) { return $out }
+    $stateFile = Join-Path $StateDir 'wol-sent.txt'
+    $sent = @()
+    if (Test-Path $stateFile) { $sent = @(Get-Content $stateFile) }
+    $today = $Now.ToString('yyyy-MM-dd')
+    $dow = $Now.DayOfWeek.ToString().Substring(0, 3)
+    foreach ($r in @(Import-Csv -Path $csv -Encoding UTF8)) {
+        if ([string]$r.Enabled -ne 'Yes') { continue }
+        $t = ([string]$r.UpdateTime).Trim()
+        if ($t -notmatch '^(\d{1,2}):(\d{2})$') { continue }
+        $days = ([string]$r.UpdateDays).Trim()
+        if ($days -ne 'All' -and (@($days -split ',' | ForEach-Object { $_.Trim() }) -notcontains $dow)) { continue }
+        $target = $Now.Date.AddHours([int]$Matches[1]).AddMinutes([int]$Matches[2])
+        $mins = ($target - $Now).TotalMinutes
+        if ($mins -lt 1 -or $mins -gt 20) { continue }
+        $name = [string]$r.ComputerName
+        $key = "$today|$name"
+        if ($sent -contains $key) { continue }
+        $mac = Get-InventoryMac $name
+        if (-not $mac) { $out += "WoL: $name - MAC nav zinams (nav inventara)"; continue }
+        try {
+            Send-MagicPacket $mac; Start-Sleep -Seconds 2; Send-MagicPacket $mac
+            Add-Content -Path $stateFile -Value $key
+            $sent += $key
+            $out += "WoL: $name ($mac) pamodinats pirms $t"
+        } catch { $out += "WoL: $name - kluda: $_" }
+    }
+    if ((Test-Path $stateFile) -and (@(Get-Content $stateFile).Count -gt 500)) {
+        Get-Content $stateFile | Select-Object -Last 300 | Set-Content $stateFile
+    }
+    return $out
 }
 
 # ---------- GALVENA DALA ----------
@@ -267,6 +358,10 @@ elseif ($publish.Result -eq "Pending") { $level = "WARN" }
 if ($publish.Result -ne "UpToDate" -and $publish.Result -ne "NoManifest") {
     Write-HubLog "Publicesana: $($publish.Result) - $($publish.Details)" $level
 }
+
+$script:wakeLog = @()
+try { $script:wakeLog = @(Invoke-ScheduledWake) } catch { $script:wakeLog = @("WoL kluda: $_") }
+foreach ($w in $script:wakeLog) { Write-HubLog $w }
 
 $reportErrors = @()
 try {

@@ -43,3 +43,8 @@ publish-filiale.ps1:                                                      paraks
 Hub stāvoklis centrā: `Filiales\Auce\Atskaites\Hub\<hub>.json` (`PublishResult`: Published / UpToDate / Pending / Rejected / Error). Žurnāls hub datorā: `C:\Hub\State\hub-sync.log`.
 
 Pārbaudīts (mock, pwsh 7 Linux): pirmā publicēšana, atkārtota (UpToDate), SHA256 neatbilstība (Pending, mērķis neskarts), vecāks Sequence, `..\`, neatļauta augšējā mape, cita filiāle, cits parakstītājs, nederīgs paraksts — visi noraidīti.
+
+## Grafiks un pamodināšana filiālē (2026-11-16)
+
+- **Grafiks:** `filiales-grafiks.ps1 -Branch Auce` (īsceļš: `-CreateShortcut`) atver to pašu `C:\Scripts\config-panel.ps1` ar `-NasRoot C:\Scripts\Filiales\Auce` → pēc "Saglabāt uz NAS" un loga aizvēršanas automātiski `publish-filiale.ps1`.
+- **WoL pēc grafika:** `hub-sync.ps1` (3. daļa) — datoriem ar `UpdateTime` un šodienas dienu `UpdateDays` hub 1–20 min pirms laika nosūta magic packet 2× (255.255.255.255 + /24 apraides adrese), MAC no `Logs\Inventory\<dators>.json` (vadu adapteris), reizi dienā (`C:\Hub\State\wol-sent.txt`); rezultāts hub žurnālā un statusā `LastWake`. Kopā ar `ShutdownAfter=Yes` = tāpat kā Dobelē (NAS WoL + 04:00 cikls + izslēgšana). Mock tests: logs, dienas, vienreizība, Wi-Fi izslēgšana, MAC no inventāra.
