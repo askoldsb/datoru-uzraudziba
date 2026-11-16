@@ -10,6 +10,9 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - **PIUAC-IVETA 1. cikls** (palaists no hub `Invoke-Command … schtasks /Run LabAppUpdate`, 11:37): grafiks atļauj, Office M365 16.0.20527.20150 atjaunināšana uzdota, Windows Update — 7 atjauninājumi instalējas.
 - **Pilns cikls pabeigts 11:46 (~9 min)** — pirmo reizi pārbaudīta programmu uzstādīšana no hub keša: Zoom 7.2.51704 (exit 0), VLC 3.0.12 → 3.0.24 (exit 0), TeamViewer 15.83.5 un eParaksts 1.11.0 jau aktuāli, TeamViewerHost/PowerShell nav (UpdateOnly — izlaists), inventārs savākts, "=== Klienta atjauninasana pabeigta ===". 11:47 palaišana pareizi izlaista (reizi dienā). **Visa Auces ķēde darbojas.**
 - TeamViewer kolonna visām 11 Auces rindām → `No` (TeamViewer netiek atjaunināts), publicēts Sequence 20261116115425.
+- **Grafiks no paneļa:** `filiales-grafiks.ps1` + īsceļš "Auce grafiks" (`D:\Dators`); panelis bez "Atvert ESET portalu" / "Profilu kopijas" (kopija `C:\Scripts\config-panel-filiale.ps1`), bez konsoles loga, publicēšana automātiski. Visiem 11: **Wed,Sun 04:00, Izslēgt pēc**, TeamViewer No. `hub-sync.ps1` ar WoL pēc grafika publicēts (Sequence 20261116130001).
+- **Klases atjaunināšana uzreiz (13:20–13:36):** hub datorā ierakstīti `C:\Hub\Updates\Config\Commands\<PC>.json` (`UpdateNow`, derīgs 4 h) 9 datoriem + WoL. Pēc otrās WoL kārtas (3× pakete, 3 min gaidīšana) ieslēgti AUCE-KLASE-2…8, AUCE-PASN (**WoL 2–4 tagad pārbaudīts**); AUCE-KLASE-1 uz vārda neatbildēja, bet komandu apstiprināja (Started 13:30). Apstiprinājumi `Started`: 1, 2, 3, 4, 5, 6, 8 (7 un PASN vēl ne 13:33). AUCE-KLASE-5 pulkstenis, šķiet, steidzas (~3+ min).
+- TeamViewer kontā datori redzami ar VECAJIEM vārdiem (DATORKLASE-n, Auce-pasniedzejs) — alias netiek mainīts ar pārdēvēšanu.
 - Publicētais `client-install.ps1` ir no 2026-11-05 (5478CC7CC116) — ja Dobelē tas mainīts, nākamreiz publicēt ar `-RefreshFromNas`.
 
 ## 2026-11-09 — Auce: hub uz vietas, PIUAC-IVETA
