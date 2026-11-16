@@ -32,7 +32,7 @@ if ($CreateShortcut) {
     $ws = New-Object -ComObject WScript.Shell
     $sc = $ws.CreateShortcut($lnk)
     $sc.TargetPath = "powershell.exe"
-    $sc.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Branch $Branch"
+    $sc.Arguments = "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Branch $Branch"
     $sc.WorkingDirectory = "C:\Scripts\Filiales"
     $sc.IconLocation = "shell32.dll,21"
     $sc.Save()
@@ -40,13 +40,15 @@ if ($CreateShortcut) {
     exit 0
 }
 
+Add-Type -AssemblyName System.Windows.Forms
+function Show-Msg { param([string]$Text, [string]$Icon = "Information")
+    [void][System.Windows.Forms.MessageBox]::Show($Text, "$Branch grafiks", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::$Icon) }
+
 foreach ($p in @($Panel, $csv, $pub)) {
-    if (-not (Test-Path $p)) { Write-Host "KLUDA: nav $p" -ForegroundColor Red; Read-Host "Enter"; exit 1 }
+    if (-not (Test-Path $p)) { Show-Msg "Nav atrasts: $p" "Error"; exit 1 }
 }
 
 $before = (Get-FileHash $csv -Algorithm SHA256).Hash
-Write-Host "Atveru $Branch grafiku ($csv)..." -ForegroundColor Cyan
-Write-Host "Pec izmainam: 'Saglabat uz NAS', tad aizver logu - publicesana notiks automatiski."
 # Panela kopija ar paslepta pogam (originals netiek mainits)
 $panelCopy = Join-Path (Split-Path $Panel -Parent) "config-panel-filiale.ps1"
 $txt = [System.IO.File]::ReadAllText($Panel)
@@ -54,20 +56,19 @@ foreach ($h in $HideButtons) {
     $pattern = '(?m)^([ \t]*)(\$\w+)\.Text\s*=\s*"' + [regex]::Escape($h) + '"'
     if ([regex]::IsMatch($txt, $pattern)) {
         $txt = [regex]::Replace($txt, $pattern, '$0; $2.Visible = $false')
-    } else {
-        Write-Host "  (poga '$h' panelii nav atrasta - neko neslepju)" -ForegroundColor Yellow
     }
 }
 [System.IO.File]::WriteAllText($panelCopy, $txt, (New-Object System.Text.UTF8Encoding($true)))
 & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $panelCopy -NasRoot $root
 $after = (Get-FileHash $csv -Algorithm SHA256).Hash
 
-if ($after -eq $before) {
-    Write-Host "`nGrafiks nav mainits - publicet nevajag." -ForegroundColor Yellow
-    Start-Sleep -Seconds 3
-    exit 0
-}
+if ($after -eq $before) { exit 0 }
 
-Write-Host "`nGrafiks mainits - parakstu un publiceju..." -ForegroundColor Cyan
-& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $pub -Branch $Branch
-Read-Host "`nNospied Enter, lai aizvertu"
+$log = Join-Path $root "publish-last.log"
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $pub -Branch $Branch *> $log
+$out = Get-Content $log -Raw
+if ($out -match 'GATAVS: publicets \S+ Sequence (\d+)') {
+    Show-Msg ("Grafiks publicets (Sequence " + $Matches[1] + ").`nHub to panems ~15-30 min laika.")
+} else {
+    Show-Msg ("Publicesana NEIZDEVAS.`nZurnals: $log") "Error"
+}
