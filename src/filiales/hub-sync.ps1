@@ -28,6 +28,9 @@
     datoru, kura statusa fails ir svaigs (<20 min), neaiztiek.
     MAC no Logs\Inventory\<dators>.json (vadu adapteris). State\wol-sent.txt.
 
+ 4) DARBVIRSMAS IKONA "<Filiale> panelis" (kopiga darbvirsma, ka administrators)
+    -> Tools\hub-panel.ps1 (Dobeles panelis ar -NasRoot C:\Hub\Updates).
+
  Uzstadisana: skat. src/filiales/README.md.
 ============================================================
 #>
@@ -360,6 +363,35 @@ function Invoke-ScheduledWake {
     return $out
 }
 
+function Set-HubShortcuts {
+    # Kopigas darbvirsmas ikonas (visiem lietotajiem): "<Filiale> panelis" -> Tools\hub-panel.ps1 (ka administrators).
+    $out = @()
+    $panel = Join-Path $ToolsRoot "hub-panel.ps1"
+    if (-not (Test-Path -LiteralPath $panel)) { return $out }
+    $desk = [Environment]::GetFolderPath('CommonDesktopDirectory')
+    if (-not $desk -or -not (Test-Path $desk)) { return $out }
+    $lnk = Join-Path $desk ("$Branch panelis.lnk")
+    $args1 = "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$panel`" -Branch $Branch"
+    $ws = New-Object -ComObject WScript.Shell
+    if (Test-Path -LiteralPath $lnk) {
+        $cur = $ws.CreateShortcut($lnk)
+        if ($cur.Arguments -eq $args1) { return $out }
+    }
+    $sc = $ws.CreateShortcut($lnk)
+    $sc.TargetPath = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+    $sc.Arguments = $args1
+    $sc.WorkingDirectory = $ToolsRoot
+    $sc.IconLocation = "shell32.dll,21"
+    $sc.Description = "$Branch datoru panelis (grafiks, atskaite, pamodinat / izslegt / atjaunot)"
+    $sc.Save()
+    # "Palaist ka administrators" (Config\Commands raksta tikai administrators)
+    $b = [System.IO.File]::ReadAllBytes($lnk)
+    $b[0x15] = $b[0x15] -bor 0x20
+    [System.IO.File]::WriteAllBytes($lnk, $b)
+    $out += "Ikona: $lnk"
+    return $out
+}
+
 # ---------- GALVENA DALA ----------
 
 $publish = @{ Result = "Error"; Details = "nav palaists" }
@@ -378,6 +410,8 @@ if ($publish.Result -ne "UpToDate" -and $publish.Result -ne "NoManifest") {
 $script:wakeLog = @()
 try { $script:wakeLog = @(Invoke-ScheduledWake) } catch { $script:wakeLog = @("WoL kluda: $_") }
 foreach ($w in $script:wakeLog) { Write-HubLog $w }
+
+try { foreach ($l in @(Set-HubShortcuts)) { Write-HubLog $l } } catch { Write-HubLog "Ikonas kluda: $_" "WARN" }
 
 $reportErrors = @()
 try {

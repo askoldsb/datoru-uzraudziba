@@ -38,7 +38,8 @@ publish-filiale.ps1:                                                      paraks
 | `new-signing-cert.ps1` | PIUAC-ASKOLDS, parasts PowerShell (Askolda konts) | vienreiz; privātā atslēga neeksportējama, CurrentUser\My |
 | `publish-filiale.ps1` | PIUAC-ASKOLDS, parasts PowerShell | katru reizi pēc izmaiņām (`-RefreshFromNas` paņem dzīvos skriptus un PSWindowsUpdate no NAS) |
 | `install-hub-sync.ps1` | hub, admin, no `C:\Hub\Sync\Skripti\Tools\` | vienreiz (vai pēc sertifikāta maiņas) ar `-ExpectedThumbprint` no PIUAC-ASKOLDS |
-| `hub-sync.ps1` | hub `C:\Hub\Tools`, uzdevums `Hub-Sync` | automātiski; arī pats sevi atjaunina caur parakstītu `Tools\` |
+| `hub-sync.ps1` | hub `C:\Hub\Tools`, uzdevums `Hub-Sync` | automātiski; arī pats sevi atjaunina caur parakstītu `Tools\`; izveido kopīgās darbvirsmas ikonu "Auce panelis" |
+| `hub-panel.ps1` | hub, ikona "Auce panelis" (palaiž kā administrators) | Dobeles panelis (`Tools\Panelis\config-panel.ps1` + `inventory-report.ps1`, ko `publish-filiale.ps1` katrā publicēšanā iekopē no `C:\Scripts`) ar `-NasRoot C:\Hub\Updates`; grafiks tikai apskatei (labošanas pogas paslēptas), atskaite, inventārs ar Pamodināt / Izslēgt / Restartēt / Atjaunot tagad; WoL apraide → hub tīkls |
 
 Hub stāvoklis centrā: `Filiales\Auce\Atskaites\Hub\<hub>.json` (`PublishResult`: Published / UpToDate / Pending / Rejected / Error). Žurnāls hub datorā: `C:\Hub\State\hub-sync.log`.
 
@@ -48,3 +49,4 @@ Pārbaudīts (mock, pwsh 7 Linux): pirmā publicēšana, atkārtota (UpToDate), 
 
 - **Grafiks:** `filiales-grafiks.ps1 -Branch Auce` (īsceļš: `-CreateShortcut`) atver to pašu `C:\Scripts\config-panel.ps1` ar `-NasRoot C:\Scripts\Filiales\Auce` → pēc "Saglabāt uz NAS" un loga aizvēršanas automātiski `publish-filiale.ps1`.
 - **WoL pēc grafika:** `hub-sync.ps1` (3. daļa) — datoriem ar `UpdateTime` un šodienas dienu `UpdateDays` hub 1–50 min pirms laika nosūta magic packet 3× (255.255.255.255 + /24 apraides adrese), līdz 3 mēģinājumiem (katrā Hub-Sync palaišanā ik 15 min; piem. 03:15/03:30/03:45 pirms 04:00), izlaižot datorus ar svaigu statusa failu (<20 min = jau ieslēgts); MAC no `Logs\Inventory\<dators>.json` (vadu adapteris), stāvoklis `C:\Hub\State\wol-sent.txt`; rezultāts hub žurnālā un statusā `LastWake`. Kopā ar `ShutdownAfter=Yes` = tāpat kā Dobelē (NAS WoL + 04:00 cikls + izslēgšana). Mock tests: logs, dienas, vienreizība, Wi-Fi izslēgšana, MAC no inventāra.
+- **Panelis uz hub (2026-11-16):** ikona "Auce panelis" AUCEUPDATE-PC darbvirsmā (visiem lietotājiem, kā administrators) → tas pats Dobeles panelis ar hub datiem. Grafiku maina **tikai** PIUAC-ASKOLDS ("Auce grafiks") — tur ir parakstīšanas sertifikāts; hub kopijā Saglabāt/Pievienot/Dzēst/Importēt paslēpti. Darbības (pamodināt, izslēgt, restartēt, atjaunot tagad) — "Inventāra atskaite". Dobeles faili netiek mainīti; hub kopija atjaunojas pati ar katru publicēšanu.

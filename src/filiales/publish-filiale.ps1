@@ -20,6 +20,10 @@
  collect-inventory.ps1, update-notice.ps1; Modules\PSWindowsUpdate).
  Config\ NETIEK parrakstits (filiales grafiks ir savs).
 
+ Panelis: katra publicesana iekope Dobeles paneli (C:\Scripts\config-panel.ps1,
+ inventory-report.ps1) uz Tools\Panelis\ - hub to atver hub-panel.ps1
+ (darbvirsmas ikona "Auces panelis"). Dobeles faili netiek mainiti.
+
  Piemers:
    .\publish-filiale.ps1 -Branch Auce -RefreshFromNas -WhatIf
    .\publish-filiale.ps1 -Branch Auce -RefreshFromNas
@@ -33,6 +37,8 @@ param(
     [string]$NasUpdates = "\\192.168.3.31\Updates",
     [string]$CertSubject = "CN=PIUAC filiales skripti",
     [switch]$RefreshFromNas,
+    [string]$PanelSource = "C:\Scripts",
+    [string[]]$PanelFiles = @("config-panel.ps1", "inventory-report.ps1"),
     [switch]$WhatIf
 )
 
@@ -45,7 +51,7 @@ $AllowedTop = @("Scripts", "Config", "Modules", "Tools")
 $NasScriptNames = @("client-install.ps1", "collect-inventory.ps1", "update-notice.ps1")
 # Faili, ko Synology Drive NEsinhronize (pagaidu faili, "." prefikss) - tos nepublicejam,
 # citadi hub tos gaiditu bezgaligi (Pending -> Error).
-$SkipPatterns = @("*.tmp", "~*", ".*", "Thumbs.db", "desktop.ini")
+$SkipPatterns = @("*.tmp", "~*", ".*", "Thumbs.db", "desktop.ini", "*.bak")
 
 function Write-Step { param([string]$T) Write-Host "`n=== $T ===" -ForegroundColor Cyan }
 
@@ -94,6 +100,19 @@ if ($RefreshFromNas) {
     }
 }
 
+# ---------- PANELIS (Dobeles panela kopija hub datoram) ----------
+
+$panelTo = Join-Path $Source "Tools\Panelis"
+$panelOk = @($PanelFiles | Where-Object { Test-Path (Join-Path $PanelSource $_) })
+if ($panelOk.Count -gt 0) {
+    if (-not (Test-Path $panelTo)) { New-Item -ItemType Directory -Path $panelTo -Force | Out-Null }
+    foreach ($n in $PanelFiles) {
+        $from = Join-Path $PanelSource $n
+        if (Test-Path $from) { Copy-Item -LiteralPath $from -Destination (Join-Path $panelTo $n) -Force }
+        else { Write-Host "BRIDINAJUMS: nav $from (panelim hub datora)" -ForegroundColor Yellow }
+    }
+}
+
 # ---------- MANIFESTS ----------
 
 Write-Step "Failu saraksts un SHA256 ($Source)"
@@ -110,7 +129,7 @@ foreach ($top in $AllowedTop) {
         $rel = $f.FullName.Substring($srcFull.Length + 1)
         $skip = $false
         foreach ($p in $SkipPatterns) { if ($f.Name -like $p) { $skip = $true } }
-        if ($skip) { Write-Host "  (izlaists $rel - Drive to nesinhronize)" -ForegroundColor Yellow; continue }
+        if ($skip) { Write-Host "  (izlaists $rel)" -ForegroundColor Yellow; continue }
         if ($rel -match "['`"]") {
             Write-Host "KLUDA: faila nosaukuma nedrikst but pedinas: $rel" -ForegroundColor Red
             exit 1
