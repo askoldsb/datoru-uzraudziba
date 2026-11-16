@@ -9,7 +9,7 @@ rem  Dara:
 rem   1. WinRM ieslegsana
 rem   2. Administrator konts ieslegts, pec izveles flotes parole
 rem   3. Energija: dators neaizmieg (stravaa), monitors 30 min,
-rem      hibernacija un Fast Startup izslegti
+rem      hibernacija un Fast Startup izslegti; laika sinhronizacija
 rem   4. Wake-on-LAN tikla karte (ari bez energijas taupisanas karte)
 rem   5. Pieslegsana hub (labupdate) un setup-client.ps1 no hub:
 rem      labupdate konts, LabAppUpdate un Update-Notice-Check
@@ -89,6 +89,13 @@ Step "3. Energijas iestatijumi"
 & powercfg.exe /hibernate off
 New-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power' -Name HiberbootEnabled -Value 0 -PropertyType DWord -Force | Out-Null
 L "Stravaa: neaizmieg, monitors $MonitorMinutes min; hibernacija un Fast Startup izslegti." "Green"
+# Laika sinhronizacija (Auce 2026-11-16: pulksteni atskiras lidz 6 min)
+try {
+    Set-Service W32Time -StartupType Automatic; Start-Service W32Time -ErrorAction SilentlyContinue
+    & w32tm.exe /config /manualpeerlist:"time.windows.com,0x9 pool.ntp.org,0x9" /syncfromflags:manual /update | Out-Null
+    & w32tm.exe /resync /force | Out-Null
+    L "Laiks: W32Time ieslegts, serveri time.windows.com + pool.ntp.org, sinhronizets."
+} catch { L "Laika sinhronizacija: $($_.Exception.Message)" "Yellow" }
 
 # ---------- 4. Wake-on-LAN ----------
 Step "4. Wake-on-LAN"
