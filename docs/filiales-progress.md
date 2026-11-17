@@ -2,6 +2,15 @@
 
 Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi — sadaļa "Lēmumi"). Skripti: `src/filiales/`.
 
+## 2026-11-17 — Auce: panelis uz hub, kļūdas novērstas (sīkāk 2026-11-16 ieraksta beigās)
+
+- **Atlikušie darbi:**
+  1. **Trešdien 2026-11-18 no rīta:** pārbaudīt pirmo nakts ciklu — hub `C:\Hub\State\hub-sync.log` rindas `WoL: …` (03:10–03:59), visiem 11 datoriem jauns cikls ap 04:00, `Atjauninats`, datori izslēgušies.
+  2. Pārbaudīt pamodināšanu no paneļa ar 3× paketēm (Sequence 20261117113452; panelis jāatver no jauna).
+  3. Dzēst `sagatavot-datoru-AUCE.bat` (ar parolēm) no visiem Auces datoriem (attālināti no hub).
+  4. Vēlāk: dzēst `C:\Windows\SoftwareDistribution.old-*` uz AUCE-KLASE-2; DN051689 žurnāls; IVETA Secure Boot / INTENSO USB; profilu kopijas Aucē (nav).
+  5. **AUCEUPDATE-PC neizslēgt** — tas naktī modina datorus un nodod atskaites.
+
 ## 2026-11-16 — Auce: datori grafikā, pirmais īstais cikls
 
 - Statusa faili (`\\192.168.3.31\Filiales\Auce\Atskaites\Status`) apstiprina pārdēvēšanu: AUCE-KLASE-1…8, AUCE-PASN; PIUAC-IVETA, PIUAC-SVETLANA. Veci faili DATORKLASE-2/-6, AUCE-PASNIEDZEJ — no laika pirms pārdēvēšanas (dzēst hub `C:\Hub\Updates\Logs\Status`).
