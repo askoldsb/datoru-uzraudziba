@@ -47,7 +47,8 @@ try {
 } catch { }
 $bcast = @($bcast | Select-Object -Unique)
 if ($bcast.Count -eq 0) { $bcast = @("255.255.255.255") }
-$bcastText = ($bcast | ForEach-Object { '"' + $_ + '"' }) -join ", "
+# Katru adresi 3x pec kartas (viena pakete medz pazust - 2026-11-17 AUCE-KLASE-3 pamodas tikai no 3x)
+$bcastText = ((@("255.255.255.255") + $bcast) * 3 | ForEach-Object { '"' + $_ + '"' }) -join ", "
 
 # Panelis: paslept grafika labosanas pogas, cits virsraksts un piezime
 $txt = [System.IO.File]::ReadAllText($panelSrc)
@@ -63,7 +64,7 @@ $txt = $txt.Replace('$form.Text ="Atjauninasanas grafika parvaldiba - $NasRoot"'
 # Inventara atskaite: WoL uz hub tikla apraidi
 if (Test-Path $invSrc) {
     $inv = [System.IO.File]::ReadAllText($invSrc)
-    $inv = $inv.Replace('"255.255.255.255", "192.168.3.255"', ('"255.255.255.255", ' + $bcastText))
+    $inv = $inv.Replace('"255.255.255.255", "192.168.3.255"', $bcastText)
     [System.IO.File]::WriteAllText((Join-Path $run "inventory-report.ps1"), $inv, (New-Object System.Text.UTF8Encoding($true)))
 } else {
     Remove-Item (Join-Path $run "inventory-report.ps1") -Force -ErrorAction SilentlyContinue
