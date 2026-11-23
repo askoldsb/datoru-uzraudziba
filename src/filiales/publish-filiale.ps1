@@ -34,7 +34,7 @@ param(
     [string]$Branch = "Auce",
     [string]$Source = "",
     [string]$Destination = "",
-    [string]$NasUpdates = "\\192.168.3.31\Updates",
+    [string]$NasUpdates = "\\PIUAC_CLOUD\Updates",
     [string]$CertSubject = "CN=PIUAC filiales skripti",
     [switch]$RefreshFromNas,
     [string]$PanelSource = "C:\Scripts",
