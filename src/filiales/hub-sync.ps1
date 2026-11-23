@@ -267,16 +267,21 @@ function Write-HubStatus {
 # ---------- 3. WAKE-ON-LAN PEC GRAFIKA ----------
 
 function Find-InventoryAdapters {
+    # Tikla adapteri no inventara: Network.Adapters. (Inventara ir ari Video.Adapters -
+    # agrak rekursiva meklesana atrada tos pirmos, un MAC netika atrasts - 2026-11-18/22 WoL nenotika.)
     param($Obj)
     if ($null -eq $Obj) { return $null }
+    $net = $Obj.PSObject.Properties['Network']
+    if ($net -and $net.Value) {
+        $ad = $net.Value.PSObject.Properties['Adapters']
+        if ($ad -and $ad.Value) { return @($ad.Value) }
+    }
+    # Rezerve: jebkurs 'Adapters' masivs, kura elementiem ir Mac
     if ($Obj -is [System.Management.Automation.PSCustomObject]) {
         foreach ($p in $Obj.PSObject.Properties) {
-            if ($p.Name -eq 'Adapters') { return @($p.Value) }
-            $r = Find-InventoryAdapters $p.Value
-            if ($r) { return $r }
+            if ($p.Name -eq 'Adapters' -and @(@($p.Value) | Where-Object { $_ -and $_.PSObject.Properties['Mac'] }).Count -gt 0) { return @($p.Value) }
+            if ($p.Value -is [System.Management.Automation.PSCustomObject]) { $r = Find-InventoryAdapters $p.Value; if ($r) { return $r } }
         }
-    } elseif ($Obj -is [System.Array]) {
-        foreach ($x in $Obj) { $r = Find-InventoryAdapters $x; if ($r) { return $r } }
     }
     return $null
 }
