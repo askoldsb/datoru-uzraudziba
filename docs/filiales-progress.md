@@ -9,6 +9,8 @@ Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi 
 - **Cēlonis (kļūda kodā):** `Find-InventoryAdapters` meklēja pirmo `Adapters` rekursīvi — inventārā pirms `Network.Adapters` ir `Video.Adapters` (bez Mac). Mock testā MAC funkcija bija aizstāta, tāpēc kļūda netika pamanīta.
 - **Labojums:** ņem `Network.Adapters`; rezerve — `Adapters` masīvs ar `Mac`. Tests ar reālu struktūru (Video + Wi-Fi + vadu; viens adapteris) OK. Publicēts Sequence **20261123101229**.
 - Publicēšana no PIUAC-ASKOLDS uz `\\192.168.3.31\Filiales` → **Access denied**: SMB sesija ar 192.168.3.31 iet ar citu NAS kontu (N: Fotostoks). Apvedceļš: `-Destination \\PIUAC_CLOUD\Filiales\Auce\Skripti` (atsevišķa sesija ar kontu Askolds).
+- Hub pārbaude 10:55: `hub-sync.ps1` 65D83702A0B1, `Get-InventoryMac` atrod MAC visiem 11 (sakrīt ar paneli). Nākamais nakts cikls — trešdien 2026-11-25 04:00.
+- NAS (Askolds, 10:20–10:50): DSM izdzēstas liekās koplietojamās mapes (cloud_exchange, Dobeles PIUAC, piuacweb, stock-temp, video); palika Askolds, backups, Filiales, Fotostoks, homes, ProfiluKopijas, Updates. Piekļuve `\\PIUAC_CLOUD` atjaunota (`net use … /user:Askolds` **parastā**, ne admin logā + Explorer restarts). `publish-filiale.ps1` noklusētais mērķis → `\\PIUAC_CLOUD\Filiales\<filiāle>\Skripti`.
 
 ## 2026-11-17 — Auce: panelis uz hub, kļūdas novērstas (sīkāk 2026-11-16 ieraksta beigās)
 

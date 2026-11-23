@@ -45,7 +45,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 if (-not $Source)      { $Source = "C:\Scripts\Filiales\$Branch" }
-if (-not $Destination) { $Destination = "\\192.168.3.31\Filiales\$Branch\Skripti" }
+if (-not $Destination) { $Destination = "\\PIUAC_CLOUD\Filiales\$Branch\Skripti" }  # nosaukums, ne IP: SMB sesija ar 192.168.3.31 var but ar citu NAS kontu (N: Fotostoks)
 
 $AllowedTop = @("Scripts", "Config", "Modules", "Tools")
 $NasScriptNames = @("client-install.ps1", "collect-inventory.ps1", "update-notice.ps1")
