@@ -2,6 +2,14 @@
 
 Jaunākie ieraksti augšā. Sākuma dokuments: `docs/filiales-auce.md` (lēmumi — sadaļa "Lēmumi"). Skripti: `src/filiales/`.
 
+## 2026-11-23 — Auce: nakts cikli 18.11 un 22.11 nenotika — cēlonis un labojums
+
+- Atskaite: klases datori pēdējo reizi redzēti 16./17.11; abās naktīs nav cikla. Hub nav gulējis (System žurnālā tikai laika maiņas, Kernel-General 1).
+- `hub-sync.log`: 03:14/03:29/03:44 visiem 11 — **"WoL: <dators> - MAC nav zinams (nav inventara)"** → paketes netika sūtītas.
+- **Cēlonis (kļūda kodā):** `Find-InventoryAdapters` meklēja pirmo `Adapters` rekursīvi — inventārā pirms `Network.Adapters` ir `Video.Adapters` (bez Mac). Mock testā MAC funkcija bija aizstāta, tāpēc kļūda netika pamanīta.
+- **Labojums:** ņem `Network.Adapters`; rezerve — `Adapters` masīvs ar `Mac`. Tests ar reālu struktūru (Video + Wi-Fi + vadu; viens adapteris) OK. Publicēts Sequence **20261123101229**.
+- Publicēšana no PIUAC-ASKOLDS uz `\\192.168.3.31\Filiales` → **Access denied**: SMB sesija ar 192.168.3.31 iet ar citu NAS kontu (N: Fotostoks). Apvedceļš: `-Destination \\PIUAC_CLOUD\Filiales\Auce\Skripti` (atsevišķa sesija ar kontu Askolds).
+
 ## 2026-11-17 — Auce: panelis uz hub, kļūdas novērstas (sīkāk 2026-11-16 ieraksta beigās)
 
 - **Atlikušie darbi:**
