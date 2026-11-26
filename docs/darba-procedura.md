@@ -20,7 +20,9 @@ Get-ChildItem C:\Scripts\*.ps1 | Unblock-File
 2. **Admin PC, administrators:** `cd C:\Scripts; .\remote-setup-client.ps1 -ComputerNames "ip,ip"` (prasa Administrator + flotes paroli).
 3. Pievienot rindu `Config\device-schedule.csv` (portatīvajiem atsevišķa grupa); vajadzības gadījumā pievienot datoru `Targets` kolonnā `apps-managed.csv` rindām (Inkscape, Blender u.c.).
 4. Pirmo ciklu palaist ārpus UpdateTime loga: dzēst `last-run-date.txt`, palaist `LabAppUpdate`.
-5. Atstāt lieko `admin` kontu likvidēšanai; turpmāk lietot iebūvēto `Administrator`.
+5. Atstāt lieko `admin` kontu likvidēšanai; turpmāk lietot iebūvēto `Administrator`. **Uzmanību:** pirms dzēšanas pārbaudīt, vai `admin` nav pats iebūvētais (pārdēvēts) — `Get-LocalUser | ? { $_.SID -like '*-500' }`; ja ir, pārdēvēt: `Rename-LocalUser admin Administrator` (DELL-MONTA).
+6. **Mērķa datorā dzēst `C:\Scripts\setup-client.ps1`** (satur `labupdate` paroli); `update-notice.ps1` un `notice-launcher.vbs` atstāt.
+7. Portatīvajam, kas reti ir birojā: `portativais-offline.ps1 -Uzstadit` (mērķa dators, administrators; prasa `labupdate` paroli).
 
 ## Cikla piespiedu palaišana
 
@@ -76,4 +78,7 @@ Noņemt (to pašu bloku ar `Remove-LocalGroupMember`). Kursantam jāizrakstās u
 | Cikls karājas pie Adobe instalatora | `patch-exe-nowait.ps1` |
 | TeamViewerHost exit code 2 (DATORKLASE-01) | vēl nav izmeklēts; vērot, vai atkārtojas |
 | Mairita (PIUAC-MAIRITA) Kick uzdevums neparādās | parādās pēc datora ieslēgšanas (viņa strādā pirmdienās) |
+| Windows Update: "Value does not fall within the expected range" (tikai fona ciklā) | iestrēdzis Dell BIOS/firmware atjauninājums (portatīvais bez barošanas) — pieslēgt barošanu, Settings → Windows Update uzstādīt visu, restartēt (DELL-MONTA 2026-11-26) |
+| OOBE cilpa pēc `start ms-cxh:localonly` (26300+) | Shift+F10: `net user X P /add`, `net localgroup Administrators X /add`, `reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OOBE /v UnattendCreatedUser /t REG_DWORD /d 1 /f`, restarts |
+| winget nav svaigā Dell attēlā (0x80073CF9) | Microsoft Store → Get updates (App Installer) |
 | ClickShare Wi-Fi pazūd | iespējams aparatūras defekts; instrukcija glabājas lietotāja datorā (Claude Docs dokuments izdzēsts) |

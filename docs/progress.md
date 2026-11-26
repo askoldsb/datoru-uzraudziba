@@ -2,6 +2,25 @@
 
 Jaunākie ieraksti augšā.
 
+## 2026-11-26 (jauns portatīvais DELL-MONTA + atjaunināšana ārpus biroja)
+
+- DELL-MONTA — Montas portatīvais (otrs dators blakus PIUAC-MONTA), Wi-Fi 192.168.3.139, programmas jau bija uzstādītas.
+- Iebūvētais administrators (SID -500) bija **pārdēvēts par `admin`** (`net user Administrator` → "user name could not be found") → `Rename-LocalUser admin Administrator` + flotes parole. Pārbaude: `Get-LocalUser | ? { $_.SID -like '*-500' }`.
+- `Enable-PSRemoting` → `remote-setup-client.ps1 -ComputerNames "192.168.3.139"` — veiksmīgi (TrustedHosts papildināts). `C:\Scripts\setup-client.ps1` (satur `labupdate` paroli) pēc tam izdzēsts.
+- `device-schedule.csv`: rinda pēc PC000159 parauga — grupa `portatīvie`, All, bez laika, ShowNotification Yes, ShutdownAfter No, **TeamViewer No** (lietotāja lēmums).
+- Pirmie cikli: Firefox 151 → 160.0.1, Zoom 7.2.51704 (uzstādīts mašīnas līmenī — pārbaudīt dublikātu lietotāja profilā), WinRAR 6.21 → 7.23, VC++ x64/x86. VLC 1603 (MSI 2318) — pēc restarta OK.
+- **Windows Update kļūda** "Value does not fall within the expected range" (PSWindowsUpdate, tikai fona uzdevumā; interaktīvi meklēšana strādāja, 14 atjauninājumi). Cēlonis: dators atnests **bez barošanas bloka**, Dell BIOS (System Firmware 1.33.0) atjauninājums iestrēdzis (ierīces problēmas kods 14). Ar barošanu Windows Update uzstādīja visu → 11:43 cikls: 10 atjauninājumi, 12:00 — vairs nav. Kļūda pazuda.
+- Jauns `src/client/portativais-offline.ps1` (uzstādīts DELL-MONTA, `C:\Program Files\LabUpdates\`): `LabOfflineUpdate` (SYSTEM, ik 2 h + startā; ārpus biroja tīkla, ar internetu, ne "metered" — reizi ~20 h `winget upgrade` jau uzstādītām programmām, bez TeamViewer; žurnāls `C:\ProgramData\LabUpdates\Offline\Logs`) un `LabOfflineReport` (`labupdate`, ik 30 min; birojā nosūta žurnālus uz `Logs\Clients\<PC>-offline-*.log`). Biroja tīkla noteikšana — TCP 445 uz 192.168.3.31. **Ārpus biroja vēl nav pārbaudīts.**
+
+## 2026-11-25 (OpenLab-Display — pēc Dell rūpnīcas atiestatīšanas no jauna)
+
+- Pēc nakts Win11 atjauninājuma dators 01:01 atjaunoja **Dell rūpnīcas attēlu** (visi dati C: zaudēti, Windows.old nav); OOBE cilpa ar `start ms-cxh:localonly` (build 26300.9974). Apiets: Shift+F10 → `net user` + `net localgroup Administrators` + `reg add …\Setup\OOBE /v UnattendCreatedUser /d 1` + `…\OOBE /v BypassNRO /d 1` → restarts. Cēlonis nav noskaidrots (Event Viewer ap 00:30–01:05, BIOS *Auto OS Recovery Threshold*).
+- Kopīgs lektoru dators pie skārienekrāna: `src/client/openlab-uzstadisana.ps1` (Administrator ieslēgšana, LV reģionālie iestatījumi ar EN saskarni, winget programmas + ESET Endpoint ar `ACTIVATION_DATA=key:` — atslēga repozitorijā NAV; `-Pabeigt`: OpenLab ne-admin, bez paroles, nevar mainīt, AutoAdminLogon) un `src/client/openlab-konti.ps1` (NoConnectedUser=3, BlockAADWorkplaceJoin, OneDrive tikai piuac.lv tenant, Office SignInOptions=2, Edge/Chrome bez profila pieteikšanās, dati dzēsti aizverot, meklētājs Google, programmu spraudņi ExtensionInstallForcelist, Chrome AllowedDomainsForApps=piuac.lv).
+- Mācība: svaigā Dell attēlā winget nebija reģistrēts (0x80073CF9) — Store → Get updates (App Installer).
+- Mācība: `ForceEphemeralProfiles` lika Chrome katrā startā prasīt meklētāju un spraudņus → aizstāts ar `ClearBrowsingDataOnExitList` + noklusējuma meklētāju politiku.
+- Sistēmā: NetBIOS vārds nemainījās (`OpenLab-display-pc` jau bija saīsināts līdz `OPENLAB-DISPLAY`), rinda grafikā derēja. `remote-setup-client.ps1` → veiksmīgi; Inkscape/Blender `Targets` papildināti ar OPENLAB-DISPLAY; pirmais cikls 13:54: 4 Windows atjauninājumi, VC++; Office 16.0.20625 atrasts. `C:\Scripts\setup-client.ps1` izdzēsts.
+- PIUAC-MAIRITA (2026-11-24): BrightAuthor "Directory C:\Users\Mairita\Documents cannot be written to" — Documents pārcelts uz `E:\OneDrive - Dobeles PIUAC\Dokumenti`; mērķis nomainīts. Ekrāni ir tīklā → publicēt caur Publish → Local Network.
+
 ## 2026-11-04 (OPENLAB-2 → Windows 11)
 
 - Pārbaude: profili uz C: (`ProfilesDirectory`=C:\Users), lietotājam pārvietotas tikai Documents/Desktop/Downloads uz D:; `D:\AppData` tukša paliekas mape. UEFI+GPT, TPM gatavs, Secure Boot izslēgts, CPU i7-7700 neatbalstīts.

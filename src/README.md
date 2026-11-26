@@ -4,7 +4,7 @@ Visi skripti ir PowerShell (`.ps1`), komentāri latviski bez garumzīmēm (ASCII
 
 | Mape | Saturs | Kur darbojas |
 |---|---|---|
-| `client/` | `client-install.ps1` (klienta cikls), `setup-client.ps1`, `remote-setup-client.ps1`, `enable-remoting-bootstrap.ps1`, inventārs, paziņojumi, rezerves kopēšanas klienta daļa | klientu datoros / no admin PC attālināti |
+| `client/` | `client-install.ps1` (klienta cikls), `setup-client.ps1`, `remote-setup-client.ps1`, `enable-remoting-bootstrap.ps1`, inventārs, paziņojumi, rezerves kopēšanas klienta daļa; `portativais-offline.ps1` (portatīvo atjaunināšana ārpus biroja); `openlab-uzstadisana.ps1` + `openlab-konti.ps1` (kopīgs lektoru dators OPENLAB-DISPLAY) | klientu datoros / no admin PC attālināti |
 | `admin/` | `config-panel.ps1`, `backup-manager.ps1`, `apps-managed-editor.ps1`, `downloader.ps1`, atskaites, reģistrācijas uzdevumi, tīkla skenēšana | admin PC `C:\Scripts` |
 | `patches/` | vienreizēji ielāpi NAS `client-install.ps1` + labojumi (`fix-*`) | admin PC, administrators |
 | `tv-test/` | TeamViewer Host testa komplekts (`00-common` … `08-rollback`) | admin PC |

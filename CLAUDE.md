@@ -40,6 +40,9 @@ Sīkāk: `docs/prasibas.md`, `docs/arhitektura.md`, `docs/darba-procedura.md`; s
 - 2026-11-03 — OPENLAB-1/2 (Admin Console Shared Device pakotne, RUM uzstādīts) Adobe CC lietotnes nakts ciklā atjaunina ar Remote Update Manager: ielāps `patch-adobe-rum.ps1`, saraksts NAS `Config\adobe-rum.txt`, limits 180 min. RUM atjaunina gada versijas ietvaros (2025 → 2026 nav).
 - Ierīču uzskaite un uzraudzība (3. līmenis) — apturēta, prioritāte ir jaunu datoru pievienošana.
 - Darba stils: atbildes latviski un īsi; komandas pa vienam solim; vienmēr norādīt datoru un tiesības (skat. `docs/prasibas.md`).
+- 2026-11-25 — Pēc `remote-setup-client.ps1` klientā **dzēst `C:\Scripts\setup-client.ps1`** (satur `labupdate` paroli atklātā tekstā; `labupdate` ir admins visos datoros). Paliek tikai `update-notice.ps1` + `notice-launcher.vbs` (vajadzīgi `Update-Notice-Check`).
+- 2026-11-25 — OPENLAB-DISPLAY = kopīgs lektoru dators: konts `OpenLab` bez paroles, ne-admin, automātiskā pieteikšanās; administrē iebūvētais `Administrator`; personīgie Microsoft konti bloķēti, Office/OneDrive tikai ar datora @piuac.lv kontu (`src/client/openlab-*.ps1`).
+- 2026-11-26 — Portatīvajiem, kas reti ir birojā: `src/client/portativais-offline.ps1` (ārpus biroja `winget upgrade` kā SYSTEM, birojā žurnāli uz NAS). Papildina, neaizstāj `LabAppUpdate`. DELL-MONTA: TeamViewer netiek atjaunināts.
 
 Sīkāk par GitHub iestatījumiem, limitiem un darba kārtību: `docs/github-iestatijumi.md`.
 
@@ -56,6 +59,9 @@ Izdarīts pēdējās sesijās (oktobris 2026):
 - 2026-11-04 — **OPENLAB-2 atjaunināts uz Windows 11 Pro 26H2** (26300; neatbalstīts CPU i7-7700 → MoSetup atslēga); klients strādā, D: mapes un RUM saglabāti; Elīna paliek administratore. Windows.old dzēst pēc ~10 dienām.
 - 2026-11-04 — **Adobe CC atjaunināšana ar RUM ieviesta** OPENLAB-1/2: testā uzstādīti visi atjauninājumi (23 / 16, Return Code 0); `patch-adobe-rum.ps1` uzlikts NAS `client-install.ps1`, izveidots `Config\adobe-rum.txt`; pagaidu `AdobeRUM-Test` dzēsti.
 - 2026-11-03 — **Pievienots PIUAC-MONTA** (biroja stacionārais, Win 11 Pro, 192.168.3.29 DHCP, PC000179, Monta Mantrova): WinRM, klients, grafiks, `LabProfileBackup`, inventārs; pirmais cikls veiksmīgs (WinRAR 7.23.0, VC++ x86); liekais `admin` konts un profils izdzēsti.
+
+- 2026-11-25 — **OPENLAB-DISPLAY** pēc Dell rūpnīcas atiestatīšanas sagatavots no jauna (OOBE apiešana, kioska tipa konts, programmas, ESET) un atkal sistēmā; cikls OK.
+- 2026-11-26 — **Pievienots DELL-MONTA** (Montas portatīvais, Wi-Fi 192.168.3.139, grupa `portatīvie`, TeamViewer No); Windows un programmas atjauninātas; uzstādīts `portativais-offline.ps1`.
 
 Neapstiprināts / atvērts: skat. "Nākamie soļi".
 
@@ -77,6 +83,10 @@ Neapstiprināts / atvērts: skat. "Nākamie soļi".
 14. **Adobe RUM**: pārbaudīt pirmo nakts ciklu ar RUM OPENLAB-1/2 (pirmdien 2026-11-09 04:00): žurnālā rindas `AdobeRUM :`, atskaitē nav `AdobeRUM (laika limits)`.
 15. **Adobe 2026 versijas OpenLab datoros** — gaida lēmumu (Askolds konsultējas ar kolēģi). Pašlaik 2025 versijas, jaunākie laidieni (RUM); CC Desktop rāda "Update available" = pāreja uz 2026. Variants: "Update all" CC logā abos datoros vai jauna Admin Console pakotne; ņemt vērā failu saderību ar 2025.
 16. **Filiāle Auce** — atsevišķa saruna: sākt ar `docs/filiales-auce.md`, žurnāls `docs/filiales-progress.md`, skripti `src/filiales/`.
+17. **DELL-MONTA ārpus biroja**: pēc pirmā ceļojuma pārbaudīt, ka NAS `Logs\Clients\DELL-MONTA-offline-*.log` parādās un tajā nav `KLUDA`; pārbaudīt Zoom dublikātu (lietotāja + mašīnas instalācija).
+18. **`setup-client.ps1` pārpalikumi**: pārbaudīt visos klientos `C:\Scripts\setup-client.ps1` (satur `labupdate` paroli) un dzēst; vēlams `remote-setup-client.ps1` papildināt ar automātisku dzēšanu pēc palaišanas. Saistīts ar 13. punktu (paroles maiņa).
+19. **OPENLAB-DISPLAY**: noskaidrot Dell automātiskās atkopšanas cēloni (Event Viewer 2026-11-25 ap 00:30–01:05, BIOS *SupportAssist OS Recovery / Auto OS Recovery Threshold*) — risks citiem Dell datoriem.
+20. PIUAC-MAIRITA: pārbaudīt BrightAuthor publicēšanu caur Local Network uz abiem info ekrāniem (pēc Win11 jaunināšanas).
 
 ## Darba kārtība ar Claude
 
